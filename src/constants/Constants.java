@@ -1,7 +1,7 @@
 package constants;
 
 public class Constants {
-    public static final int DEFAULT_WIDTH = 500;
+    public static final int DEFAULT_WIDTH = 600;
 
     public static final int DEFAULT_HEIGHT = 675;
     

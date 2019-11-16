@@ -43,11 +43,17 @@ public class LoginController {
         Photos.primaryStage.setScene(null);
         if (usernameInputText.equalsIgnoreCase("admin")) {
             rootScene = createScene("../view/admin/AdminView.fxml", Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT);
-        } else if (Photos.users.contains(usernameInputText)) {
-            rootScene = createScene("../view/user/UserView.fxml", Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT);
+        } else if (Photos.users.containsKey(usernameInputText)) {
+              Photos.currentUser = usernameInputText; 
+              rootScene = createScene("../view/user/UserView.fxml", Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT);
         } else {
             Utilities.displayAlert(Alert.AlertType.ERROR, "Error: invalid login");
         }
         Photos.primaryStage.setScene(rootScene);
     }
+    
+    public String returnUser() {
+    	return  usernameInput.getText();
+    }
+    
 }

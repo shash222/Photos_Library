@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import utilities.Utilities;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -22,9 +23,11 @@ import java.util.ResourceBundle;
 public class AdminController implements Initializable {
     @FXML
     private ListView<String> userList;
+    
+  
 
     public void initialize(URL location, ResourceBundle resources) {
-        userList.setItems(FXCollections.observableList(new ArrayList(Photos.users)));
+        userList.setItems(FXCollections.observableList(new ArrayList(Photos.users.keySet())));
     }
 
     // TODO: refactor to Utilities??? Change to displayView???
@@ -34,7 +37,7 @@ public class AdminController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("../../view/admin/CreateUserView.fxml"));
         createUserStage.setScene(new Scene(root, Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT));
         createUserStage.showAndWait();
-        Utilities.updateListView(userList, new ArrayList<>(Photos.users));
+        Utilities.updateListView(userList, new ArrayList<>(Photos.users.keySet()), constants.Constants.USERS_FILE_PATH);
     }
 
     @FXML
@@ -44,7 +47,9 @@ public class AdminController implements Initializable {
             Utilities.displayAlert(AlertType.ERROR, "No user selected");
         } else {
             Photos.users.remove(selected);
-            Utilities.updateListView(userList, new ArrayList<>(Photos.users));
+            File file = new File("src/resources/USER" + selected + ".txt"); 
+            file.delete(); 
+            Utilities.updateListView(userList, new ArrayList<>(Photos.users.keySet()), constants.Constants.USERS_FILE_PATH);
         }
     }
 }
