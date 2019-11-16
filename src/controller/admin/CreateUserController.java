@@ -12,7 +12,10 @@ import java.io.FileWriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+
+import constants.Constants;
 
 import static constants.Constants.USERS_FILE_PATH;
 
@@ -26,15 +29,10 @@ public class CreateUserController {
         if (Photos.users.containsKey(usernameInputText) || usernameInputText.equalsIgnoreCase("admin")) {
             Utilities.displayAlert(AlertType.ERROR, "Username already exists");
         } else {
-        	HashSet<String> albums = new HashSet<String>(); 
+        	HashMap<String, HashMap<String, HashSet<String>>> albums = new HashMap<String, HashMap<String, HashSet<String>>>(); 
             Photos.users.put(usernameInputText, albums);
-            String filePath = "src/resources/USER" + usernameInputText + ".txt";
-            File file = new File(filePath);
-            try {
-				file.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+            String filePath = Utilities.getUserPath(usernameInputText);
+    		Utilities.createFile(filePath);
             Utilities.displayAlert(AlertType.CONFIRMATION, "User will be added after closing this box");
         }
     }

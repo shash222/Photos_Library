@@ -18,6 +18,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 
 public class AdminController implements Initializable {
@@ -46,9 +48,12 @@ public class AdminController implements Initializable {
         if (selected == null) {
             Utilities.displayAlert(AlertType.ERROR, "No user selected");
         } else {
+        	Utilities.deleteFile(Utilities.getUserPath(selected)); 
+            HashMap<String, HashMap<String, HashSet<String>>> albums = Photos.users.get(selected);
+            for(String album : albums.keySet()){
+            	   Utilities.deleteFile(Utilities.getAlbumPath(selected, album));
+            }
             Photos.users.remove(selected);
-            File file = new File("src/resources/USER" + selected + ".txt"); 
-            file.delete(); 
             Utilities.updateListView(userList, new ArrayList<>(Photos.users.keySet()), constants.Constants.USERS_FILE_PATH);
         }
     }

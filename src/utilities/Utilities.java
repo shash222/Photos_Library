@@ -8,6 +8,7 @@ import javafx.scene.control.ListView;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -30,6 +31,15 @@ public class Utilities {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    
+    public static String getUserPath(String user) {
+    	return "src/resources/USER" + user + ".txt"; 
+    }
+    
+    public static String getAlbumPath(String user, String album) {
+    	return "src/resources/ALBUM" + user + album + ".txt"; 
+    }
+
 
     public static void updateListView(ListView<String> listView, List<String> updatedList, String path) {
         listView.setItems(FXCollections.observableList(updatedList));
@@ -47,6 +57,26 @@ public class Utilities {
         writeToFile(pathTo, paths); 
         photos.close();
 	}
+    
+    public static void deleteFile(String path) {
+		File file = new File(path);
+		System.out.println(path); 
+		if(file.delete()) {
+			System.out.println("File Deleted"); 
+		} else {
+			System.out.println("Failed to Deleted"); 
+
+		}
+	}
+    
+    public static void createFile(String path) {
+    	File file = new File(path);
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
 
     public static void writeToFile(String filePath, List<String> content) {
         try {

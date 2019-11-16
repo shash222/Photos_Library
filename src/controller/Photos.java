@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import utilities.Utilities;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -18,7 +19,7 @@ import java.util.Set;
 import static constants.Constants.USERS_FILE_PATH;
 
 public class Photos extends Application {
-    public static HashMap<String, HashSet<String>> users = new HashMap<String, HashSet<String>>();
+    public static HashMap<String, HashMap<String,HashMap<String, HashSet<String>>>> users = new HashMap<String, HashMap<String,HashMap<String, HashSet<String>>>>();
     
     public static String currentUser; 
 
@@ -33,16 +34,20 @@ public class Photos extends Application {
         String line;
         // users = new HashSet<>();
         while ((line = readerUsers.readLine()) != null) {
-            String filePath = "src/resources/USER" + line + ".txt";
+            String filePath = Utilities.getUserPath(line);
             BufferedReader readerAlbums = new BufferedReader(new FileReader(filePath));
-        	HashSet<String> albums = new HashSet<String>(); 
+            HashMap<String, HashMap<String, HashSet<String>>> albums = new HashMap<String, HashMap<String, HashSet<String>>>(); 
         	String albumLine; 
             while ((albumLine = readerAlbums.readLine()) != null) {
-            	if(!albums.contains(albumLine)) albums.add(albumLine); 
+            	if(!albums.containsKey(albumLine)) {
+            		albums.put(albumLine, new HashMap<String, HashSet<String>>()); 
+            	}
             }  
             users.put(line, albums);
+            readerAlbums.close(); 
         }
         readerUsers.close();
+        
     }
 
     @Override
