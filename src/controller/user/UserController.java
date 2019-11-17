@@ -32,11 +32,15 @@ public class UserController implements Initializable {
 	@FXML
 	private ListView<String> albumList;
 
-	private String userPath = "src/resources/USER" + Photos.currentUser + ".txt";
+	private String userPath = "src/resources/USER/" + Photos.currentUser + ".txt";
 
 	public void initialize(URL location, ResourceBundle resources) {
 		albumList.setItems(FXCollections.observableList(new ArrayList(Photos.users.get(Photos.currentUser).keySet())));
+	}
 
+	@FXML
+	public void logout(MouseEvent mouseEvent) throws IOException {
+		Utilities.logout();
 	}
 
 	public void readAlbums() throws IOException {

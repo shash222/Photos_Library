@@ -1,7 +1,10 @@
 package utilities;
 
+import constants.Constants;
 import controller.Photos;
 import javafx.collections.FXCollections;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
@@ -21,6 +24,11 @@ import static constants.Constants.USERS_FILE_PATH;
 
 
 public class Utilities {
+    public static void logout() throws IOException {
+        Photos.primaryStage.setScene(new Scene(FXMLLoader.load(Utilities.class.getResource("../view/Login.fxml")), Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT));
+    }
+
+
     public static void quitApp() {
         System.exit(0);
     }
@@ -33,13 +41,12 @@ public class Utilities {
     }
     
     public static String getUserPath(String user) {
-    	return "src/resources/USER" + user + ".txt"; 
+    	return "src/resources/USER/" + user + ".txt";
     }
     
     public static String getAlbumPath(String user, String album) {
-    	return "src/resources/ALBUM" + user + album + ".txt"; 
+    	return "src/resources/ALBUM/" + user + album + ".txt";
     }
-
 
     public static void updateListView(ListView<String> listView, List<String> updatedList, String path) {
         listView.setItems(FXCollections.observableList(updatedList));

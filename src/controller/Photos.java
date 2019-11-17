@@ -21,7 +21,7 @@ import static constants.Constants.USERS_FILE_PATH;
 public class Photos extends Application {
     public static HashMap<String, HashMap<String,HashMap<String, HashSet<String>>>> users = new HashMap<String, HashMap<String,HashMap<String, HashSet<String>>>>();
     
-    public static String currentUser; 
+    public static String currentUser;
 
     public static Stage primaryStage;
 

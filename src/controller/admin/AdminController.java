@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import utilities.Utilities;
 
+import javax.rmi.CORBA.Util;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +31,11 @@ public class AdminController implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
         userList.setItems(FXCollections.observableList(new ArrayList(Photos.users.keySet())));
+    }
+
+    @FXML
+    public void logout(MouseEvent mouseEvent) throws IOException {
+        Utilities.logout();
     }
 
     // TODO: refactor to Utilities??? Change to displayView???
