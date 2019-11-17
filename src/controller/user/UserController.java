@@ -1,10 +1,5 @@
 package controller.user;
 
-import static constants.Constants.USERS_FILE_PATH;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -13,26 +8,22 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import constants.Constants;
 import controller.Photos;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import utilities.Utilities;
 
 public class UserController implements Initializable {
 	@FXML
 	private ListView<String> albumList;
 
-	private String userPath = "src/resources/USER/" + Photos.currentUser + ".txt";
+	private String userPath = "src/resources/USER/" + Photos.currentUser;
+	public static String selectedAlbum;
 
 	public void initialize(URL location, ResourceBundle resources) {
 		albumList.setItems(FXCollections.observableList(new ArrayList(Photos.users.get(Photos.currentUser).keySet())));
@@ -45,6 +36,14 @@ public class UserController implements Initializable {
 
 	public void readAlbums() throws IOException {
 
+	}
+
+	@FXML
+	public void setAlbumSelected(MouseEvent mouseEvent) {
+		String selectedAlbum = albumList.getSelectionModel().getSelectedItem();
+		if (selectedAlbum != null) {
+			this.selectedAlbum = selectedAlbum;
+		}
 	}
 
 	public void createAlbumDialog(MouseEvent mouseEvent) throws IOException {
@@ -66,8 +65,9 @@ public class UserController implements Initializable {
 
 	private void createAlbum(String albumName) {
 		System.out.println(albumName); 
-		Photos.users.get(Photos.currentUser).put(albumName, new HashMap<String, HashSet<String>>()); 
-		String filePath = Utilities.getAlbumPath(Photos.currentUser, albumName);
+		Photos.users.get(Photos.currentUser).put(albumName, new HashMap<String, HashSet<String>>());
+		String filePath = String.format("%s/%s.txt",  Utilities.getAlbumPath(Photos.currentUser), albumName);
+		System.out.println("Filepath   " + filePath);
 		Utilities.createFile(filePath);
 		Utilities.displayAlert(AlertType.CONFIRMATION, "Album will be added after closing this box");
 		Utilities.updateListView(albumList, new ArrayList<>(Photos.users.get(Photos.currentUser).keySet()), userPath);
@@ -80,7 +80,7 @@ public class UserController implements Initializable {
 			Utilities.displayAlert(AlertType.ERROR, "No Album selected");
 		} else {
 			Photos.users.get(Photos.currentUser).remove(selected);
-			deleteAlbumFile(Utilities.getAlbumPath(Photos.currentUser, selected)); 
+			deleteAlbumFile(String.format("%s/%s.txt", Utilities.getAlbumPath(Photos.currentUser), selected));
 			
 		}
 	}
@@ -106,11 +106,11 @@ public class UserController implements Initializable {
 			} else {
 				// add file and transfer info
 				createAlbum(result.get()); 
-				Utilities.transferAlbumContent(Utilities.getAlbumPath(Photos.currentUser, selected), Utilities.getAlbumPath(Photos.currentUser, result.get()));
+				Utilities.transferAlbumContent(String.format("%s/%s.txt", Utilities.getAlbumPath(Photos.currentUser), selected), String.format("%s/%s.txt", Utilities.getAlbumPath(Photos.currentUser), result.get()));
 				
 				// delete old file 
 				Photos.users.get(Photos.currentUser).remove(selected);
-				deleteAlbumFile(Utilities.getAlbumPath(Photos.currentUser, selected)); 
+				deleteAlbumFile(String.format("%s/%s.txt", Utilities.getAlbumPath(Photos.currentUser), selected));
 			}
 			
 		}

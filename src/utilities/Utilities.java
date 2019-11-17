@@ -40,12 +40,12 @@ public class Utilities {
         alert.showAndWait();
     }
     
-    public static String getUserPath(String user) {
-    	return "src/resources/USER/" + user + ".txt";
+    public static String getUserPath() {
+    	return "src/resources/USERS";
     }
     
-    public static String getAlbumPath(String user, String album) {
-    	return "src/resources/ALBUM/" + user + album + ".txt";
+    public static String getAlbumPath(String user) {
+    	return String.format("src/resources/USERS/%s", user);
     }
 
     public static void updateListView(ListView<String> listView, List<String> updatedList, String path) {
@@ -75,7 +75,16 @@ public class Utilities {
 
 		}
 	}
-    
+
+	public static void deleteFolder(String folderPath) {
+        File folder = new File(folderPath);
+        String[] filesInFolder = folder.list();
+        for (String file : filesInFolder) {
+            File currentFile = new File(folder.getPath(), file);
+            deleteFile(file);
+        }
+    }
+
     public static void createFile(String path) {
     	File file = new File(path);
 		try {

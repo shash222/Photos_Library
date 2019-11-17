@@ -34,7 +34,7 @@ public class Photos extends Application {
         String line;
         // users = new HashSet<>();
         while ((line = readerUsers.readLine()) != null) {
-            String filePath = Utilities.getUserPath(line);
+            String filePath = String.format("%s/%s", Utilities.getUserPath(), line);
             BufferedReader readerAlbums = new BufferedReader(new FileReader(filePath));
             HashMap<String, HashMap<String, HashSet<String>>> albums = new HashMap<String, HashMap<String, HashSet<String>>>(); 
         	String albumLine; 

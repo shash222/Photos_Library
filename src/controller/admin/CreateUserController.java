@@ -31,8 +31,11 @@ public class CreateUserController {
         } else {
         	HashMap<String, HashMap<String, HashSet<String>>> albums = new HashMap<String, HashMap<String, HashSet<String>>>(); 
             Photos.users.put(usernameInputText, albums);
-            String filePath = Utilities.getUserPath(usernameInputText);
-
+            String filePath = String.format("%s\\%s", Utilities.getUserPath(), usernameInputText);
+            File folder = new File(filePath);
+            System.out.println(folder.getPath());
+            if (folder.mkdirs()) System.out.println("Made");
+            else System.out.println("Not made");
     		Utilities.createFile(filePath);
             Utilities.displayAlert(AlertType.CONFIRMATION, "User will be added after closing this box");
         }

@@ -26,8 +26,6 @@ import java.util.ResourceBundle;
 public class AdminController implements Initializable {
     @FXML
     private ListView<String> userList;
-    
-  
 
     public void initialize(URL location, ResourceBundle resources) {
         userList.setItems(FXCollections.observableList(new ArrayList(Photos.users.keySet())));
@@ -54,10 +52,12 @@ public class AdminController implements Initializable {
         if (selected == null) {
             Utilities.displayAlert(AlertType.ERROR, "No user selected");
         } else {
-        	Utilities.deleteFile(Utilities.getUserPath(selected)); 
+            // User's folder
+            String folderPath = String.format("%s/%s", Utilities.getUserPath(), selected);
+        	Utilities.deleteFolder(folderPath);
             HashMap<String, HashMap<String, HashSet<String>>> albums = Photos.users.get(selected);
             for(String album : albums.keySet()){
-            	   Utilities.deleteFile(Utilities.getAlbumPath(selected, album));
+            	   Utilities.deleteFile(String.format("%s/%s.txt", Utilities.getAlbumPath(selected), album));
             }
             Photos.users.remove(selected);
             Utilities.updateListView(userList, new ArrayList<>(Photos.users.keySet()), constants.Constants.USERS_FILE_PATH);
