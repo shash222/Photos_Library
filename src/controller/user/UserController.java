@@ -22,7 +22,7 @@ public class UserController implements Initializable {
 	@FXML
 	private ListView<String> albumList;
 
-	private String userPath = "src/resources/USER/" + Photos.currentUser;
+	private String userPath = Utilities.getAlbumPath(Photos.currentUser) + "/" + Photos.currentUser + ".txt"; 
 	public static String selectedAlbum;
 
 	public void initialize(URL location, ResourceBundle resources) {

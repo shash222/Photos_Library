@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.user.OpenAlbumController">
+   <children>
+      <Text layoutX="23.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Placeholder Text" wrappingWidth="320.0" />
+      <TableView layoutY="41.0" prefHeight="359.0" prefWidth="601.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Image" />
+          <TableColumn prefWidth="75.0" text="Caption" />
+          <TableColumn prefWidth="75.0" text="Date Taken" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
