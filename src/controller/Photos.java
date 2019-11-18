@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.Photo;
 import utilities.Utilities;
 
 import java.io.BufferedReader;
@@ -19,7 +20,7 @@ import java.util.Set;
 import static constants.Constants.USERS_FILE_PATH;
 
 public class Photos extends Application {
-    public static HashMap<String, HashMap<String,HashMap<String, HashSet<String>>>> users = new HashMap<String, HashMap<String,HashMap<String, HashSet<String>>>>();
+    public static HashMap<String, HashMap<String,HashSet<Photo>>> users = new HashMap<String, HashMap<String,HashSet<Photo>>>();
     
     public static String currentUser;
 
@@ -36,11 +37,11 @@ public class Photos extends Application {
         while ((line = readerUsers.readLine()) != null) {
             String filePath = Utilities.getUserTxtPath(line);
             BufferedReader readerAlbums = new BufferedReader(new FileReader(filePath));
-            HashMap<String, HashMap<String, HashSet<String>>> albums = new HashMap<String, HashMap<String, HashSet<String>>>(); 
+            HashMap<String, HashSet<Photo>> albums = new HashMap<String,HashSet<Photo>>(); 
         	String albumLine; 
             while ((albumLine = readerAlbums.readLine()) != null) {
             	if(!albums.containsKey(albumLine)) {
-            		albums.put(albumLine, new HashMap<String, HashSet<String>>()); 
+            		albums.put(albumLine, new HashSet<Photo>()); 
             	}
             }  
             users.put(line, albums);

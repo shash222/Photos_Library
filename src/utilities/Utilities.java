@@ -54,6 +54,7 @@ public class Utilities {
         listView.refresh();
         writeToFile(path, updatedList);
     }
+   
     
     public static void transferAlbumContent(String pathFrom, String pathTo) throws IOException {
 		BufferedReader photos = new BufferedReader(new FileReader(pathFrom));
@@ -110,4 +111,7 @@ public class Utilities {
         }
 
     }
+
+
+	
 }

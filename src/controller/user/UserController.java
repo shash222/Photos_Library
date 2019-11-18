@@ -16,6 +16,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
+import model.Photo;
 import utilities.Utilities;
 
 public class UserController implements Initializable {
@@ -65,7 +66,7 @@ public class UserController implements Initializable {
 
 	private void createAlbum(String albumName) {
 		System.out.println(albumName); 
-		Photos.users.get(Photos.currentUser).put(albumName, new HashMap<String, HashSet<String>>());
+		Photos.users.get(Photos.currentUser).put(albumName, new HashSet<Photo>());
 		String filePath = String.format("%s/%s.txt",  Utilities.getUserPath(Photos.currentUser), albumName);
 		System.out.println("Filepath   " + filePath);
 		Utilities.createFile(filePath);

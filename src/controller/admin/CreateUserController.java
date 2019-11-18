@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import model.Photo;
 import utilities.Utilities;
 
 import java.io.BufferedWriter;
@@ -29,10 +30,10 @@ public class CreateUserController {
         if (Photos.users.containsKey(usernameInputText) || usernameInputText.equalsIgnoreCase("admin")) {
             Utilities.displayAlert(AlertType.ERROR, "Username already exists");
         } else {
-        	HashMap<String, HashMap<String, HashSet<String>>> albums = new HashMap<String, HashMap<String, HashSet<String>>>(); 
+        	HashMap<String, HashSet<Photo>> albums = new HashMap<String, HashSet<Photo>>(); 
             Photos.users.put(usernameInputText, albums);
             String filePath = String.format("%s/USER%s.txt", Utilities.getUserPath(usernameInputText), usernameInputText); 
-            // Utilities.getUserPath(usernameInputText) + "/" + "USER" + usernameInputText + ".txt";
+            // 
             
             File file = new File(filePath);
             file.getParentFile().mkdir();
