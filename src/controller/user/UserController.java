@@ -22,7 +22,7 @@ public class UserController implements Initializable {
 	@FXML
 	private ListView<String> albumList;
 
-	private String userPath = Utilities.getAlbumPath(Photos.currentUser) + "/" + Photos.currentUser + ".txt"; 
+	private String userPath = Utilities.getUserTxtPath(Photos.currentUser);  
 	public static String selectedAlbum;
 
 	public void initialize(URL location, ResourceBundle resources) {
@@ -66,7 +66,7 @@ public class UserController implements Initializable {
 	private void createAlbum(String albumName) {
 		System.out.println(albumName); 
 		Photos.users.get(Photos.currentUser).put(albumName, new HashMap<String, HashSet<String>>());
-		String filePath = String.format("%s/%s.txt",  Utilities.getAlbumPath(Photos.currentUser), albumName);
+		String filePath = String.format("%s/%s.txt",  Utilities.getUserPath(Photos.currentUser), albumName);
 		System.out.println("Filepath   " + filePath);
 		Utilities.createFile(filePath);
 		Utilities.displayAlert(AlertType.CONFIRMATION, "Album will be added after closing this box");
@@ -80,7 +80,7 @@ public class UserController implements Initializable {
 			Utilities.displayAlert(AlertType.ERROR, "No Album selected");
 		} else {
 			Photos.users.get(Photos.currentUser).remove(selected);
-			deleteAlbumFile(String.format("%s/%s.txt", Utilities.getAlbumPath(Photos.currentUser), selected));
+			deleteAlbumFile(String.format("%s/%s.txt", Utilities.getUserPath(Photos.currentUser), selected));
 			
 		}
 	}
@@ -106,11 +106,11 @@ public class UserController implements Initializable {
 			} else {
 				// add file and transfer info
 				createAlbum(result.get()); 
-				Utilities.transferAlbumContent(String.format("%s/%s.txt", Utilities.getAlbumPath(Photos.currentUser), selected), String.format("%s/%s.txt", Utilities.getAlbumPath(Photos.currentUser), result.get()));
+				Utilities.transferAlbumContent(String.format("%s/%s.txt", Utilities.getUserPath(Photos.currentUser), selected), String.format("%s/%s.txt", Utilities.getUserPath(Photos.currentUser), result.get()));
 				
 				// delete old file 
 				Photos.users.get(Photos.currentUser).remove(selected);
-				deleteAlbumFile(String.format("%s/%s.txt", Utilities.getAlbumPath(Photos.currentUser), selected));
+				deleteAlbumFile(String.format("%s/%s.txt", Utilities.getUserPath(Photos.currentUser), selected));
 			}
 			
 		}

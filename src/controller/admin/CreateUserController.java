@@ -31,7 +31,8 @@ public class CreateUserController {
         } else {
         	HashMap<String, HashMap<String, HashSet<String>>> albums = new HashMap<String, HashMap<String, HashSet<String>>>(); 
             Photos.users.put(usernameInputText, albums);
-            String filePath = Utilities.getUserPath() + "/" + usernameInputText + "/" + usernameInputText + ".txt";; 
+            String filePath = String.format("%s/USER%s.txt", Utilities.getUserPath(usernameInputText), usernameInputText); 
+            // Utilities.getUserPath(usernameInputText) + "/" + "USER" + usernameInputText + ".txt";
             
             File file = new File(filePath);
             file.getParentFile().mkdir();

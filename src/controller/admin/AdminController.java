@@ -53,12 +53,14 @@ public class AdminController implements Initializable {
             Utilities.displayAlert(AlertType.ERROR, "No user selected");
         } else {
             // User's folder
-            String folderPath = String.format("%s/%s", Utilities.getUserPath(), selected);
+            String folderPath = Utilities.getUserPath(selected);
         	Utilities.deleteFolder(folderPath);
+        	/*
             HashMap<String, HashMap<String, HashSet<String>>> albums = Photos.users.get(selected);
             for(String album : albums.keySet()){
             	   Utilities.deleteFile(String.format("%s/%s.txt", Utilities.getAlbumPath(selected), album));
             }
+            */ 
             Photos.users.remove(selected);
             Utilities.updateListView(userList, new ArrayList<>(Photos.users.keySet()), constants.Constants.USERS_FILE_PATH);
         }
