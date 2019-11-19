@@ -36,6 +36,7 @@ public class AlbumEntry {
 
     public void setCaption(String caption) {
         this.caption = caption;
+        this.associatedPhoto.setCaption(caption);
     }
 
 }

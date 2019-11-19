@@ -7,12 +7,21 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.user.OpenAlbumController">
    <children>
       <Text layoutX="23.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Placeholder Text" wrappingWidth="320.0" />
-      <TableView layoutY="41.0" prefHeight="359.0" prefWidth="601.0">
+      <TableView fx:id="photoTable" layoutY="41.0" prefHeight="359.0" prefWidth="601.0" onMouseClicked="#updateSelected">
         <columns>
-          <TableColumn prefWidth="75.0" text="Image" />
-          <TableColumn prefWidth="75.0" text="Caption" />
-          <TableColumn prefWidth="75.0" text="Date Taken" />
+          <TableColumn fx:id="imageColumn" prefWidth="75.0" text="Image" />
+          <TableColumn fx:id="captionColumn" prefWidth="75.0" text="Caption" />
+          <TableColumn fx:id="dateTakenColumn" prefWidth="75.0" text="Date Taken" />
         </columns>
       </TableView>
+      <Button layoutX="15.0" layoutY="427.0" mnemonicParsing="false" onMouseClicked="#addPhoto" text="Add Photo" />
+      <Button layoutX="4.0" layoutY="462.0" mnemonicParsing="false" onMouseClicked="#removePhoto" text="Remove Photo" />
+      <Button layoutX="108.0" layoutY="427.0" mnemonicParsing="false" onMouseClicked="#modifyCaption" text="Modify Caption" />
+      <Button layoutX="127.0" layoutY="462.0" mnemonicParsing="false" onMouseClicked="#displayPhoto" text="Display Photo" />
+      <Button layoutX="385.0" layoutY="427.0" mnemonicParsing="false" onMouseClicked="#addTag" text="Add Tag" />
+      <Button layoutX="373.0" layoutY="462.0" mnemonicParsing="false" onMouseClicked="#removeTag" text="Remove Tag" />
+      <Button layoutX="466.0" layoutY="427.0" mnemonicParsing="false" onMouseClicked="#copyToNewAlbum" text="Copy to New Album" />
+      <Button layoutX="465.0" layoutY="461.0" mnemonicParsing="false" onMouseClicked="#moveToNewAlbum" text="Move to New Album" />
+      <Button layoutX="252.0" layoutY="440.0" mnemonicParsing="false" onMouseClicked="#viewSlideshow" text="View Slideshow" />
    </children>
 </AnchorPane>

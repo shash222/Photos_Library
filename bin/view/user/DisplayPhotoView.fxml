@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.user.DisplayPhotoController">
+   <children>
+      <Label fx:id="captionField" layoutX="14.0" layoutY="251.0" text="Placeholder Caption" />
+      <Label layoutX="332.0" layoutY="56.0" text="Date Taken: " />
+      <TextField fx:id="dateTakenField" editable="false" layoutX="405.0" layoutY="52.0" prefHeight="25.0" prefWidth="183.0" />
+      <Label layoutX="351.0" layoutY="113.0" text="Tags:" />
+      <TableView layoutX="405.0" layoutY="113.0" prefHeight="243.0" prefWidth="183.0">
+        <columns>
+          <TableColumn prefWidth="92.0" text="Key" />
+          <TableColumn prefWidth="90.0" text="Value" />
+        </columns>
+      </TableView>
+      <ImageView fx:id="imageContainer" fitHeight="243.0" fitWidth="306.0" layoutX="6.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>

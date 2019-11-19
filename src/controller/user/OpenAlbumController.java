@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
@@ -17,6 +18,7 @@ import utilities.Utilities;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 // TODO Fix bug where list doesn't update unless this view is reopened
@@ -82,8 +84,20 @@ public class OpenAlbumController implements Initializable {
     // TODO doesn't work, finish
     @FXML
     public void modifyCaption(MouseEvent mouseEvent) {
-        if (selectedEntry == null) Utilities.displayAlert(Alert.AlertType.ERROR, "No entry selected");
-        else Utilities.displayView("user/ModifyCaptionView.fxml");
+    	if (selectedEntry == null)
+			Utilities.displayAlert(Alert.AlertType.ERROR, "No entry selected");
+		else {
+			TextInputDialog dialog = new TextInputDialog();
+			dialog.setTitle("Rename Caption" + selectedEntry.getCaption());
+			dialog.setHeaderText("Rename " + selectedEntry.getCaption());
+			dialog.setContentText("New Caption:");
+
+			// Traditional way to get the response value.
+			Optional<String> result = dialog.showAndWait();
+			if (result.isPresent()) {
+				selectedEntry.setCaption(result.get());
+			}
+		}
     }
 
     @FXML
@@ -116,5 +130,4 @@ public class OpenAlbumController implements Initializable {
     public void viewSlideshow(MouseEvent mouseEvent) {
         Utilities.displayView("user/ViewSlideshowView.fxml");
     }
-
 }

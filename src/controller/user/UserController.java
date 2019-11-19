@@ -1,8 +1,10 @@
 package controller.user;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -117,12 +119,27 @@ public class UserController implements Initializable {
 				
 			} else {
 				// add file and transfer info
+				
+				File oldFile = new File(String.format("%s/%s.txt", Utilities.getUserPath(Photos.currentUser), selected));
+				File newFile = new File(String.format("%s/%s.txt", Utilities.getUserPath(Photos.currentUser), result.get()));
+				if(oldFile.renameTo(newFile)) {
+					System.out.println("Renamed Successfully."); 
+				} else {
+					System.out.println("Failed to rename."); 
+				}
+				HashSet<Photo> temp = Photos.users.get(Photos.currentUser).get(selected);
+				Photos.users.get(Photos.currentUser).remove(selected); 
+				Photos.users.get(Photos.currentUser).put(result.get(), temp); 
+				Utilities.updateListView(albumList, new ArrayList<>(Photos.users.get(Photos.currentUser).keySet()), userPath);
+
+				/*
 				createAlbum(result.get()); 
 				Utilities.transferAlbumContent(String.format("%s/%s.txt", Utilities.getUserPath(Photos.currentUser), selected), String.format("%s/%s.txt", Utilities.getUserPath(Photos.currentUser), result.get()));
 				
 				// delete old file 
 				Photos.users.get(Photos.currentUser).remove(selected);
 				deleteAlbumFile(String.format("%s/%s.txt", Utilities.getUserPath(Photos.currentUser), selected));
+				*/ 
 			}
 		}
 	}
