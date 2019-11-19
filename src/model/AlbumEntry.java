@@ -18,7 +18,7 @@ public class AlbumEntry {
         this.associatedPhoto = associatedPhoto;
     }
 
-    public ImageView getImageView() {
+    public ImageView getImage() {
         return this.image;
     }
 

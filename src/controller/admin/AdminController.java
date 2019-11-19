@@ -36,13 +36,8 @@ public class AdminController implements Initializable {
         Utilities.logout();
     }
 
-    // TODO: refactor to Utilities??? Change to displayView???
     @FXML
     public void displayCreateUserView(MouseEvent mouseEvent) throws IOException {
-//        Stage createUserStage = new Stage();
-//        Parent root = FXMLLoader.load(getClass().getResource("../../view/admin/CreateUserView.fxml"));
-//        createUserStage.setScene(new Scene(root, Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT));
-//        createUserStage.showAndWait();
         Utilities.displayView("admin/CreateUserView.fxml");
         Utilities.updateListView(userList, new ArrayList<>(Photos.users.keySet()), constants.Constants.USERS_FILE_PATH);
     }

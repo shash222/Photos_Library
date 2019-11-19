@@ -11,6 +11,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Photo;
 
@@ -32,6 +33,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
+import static constants.Constants.DEFAULT_HEIGHT;
 import static constants.Constants.USERS_FILE_PATH;
 
 
@@ -125,11 +127,23 @@ public class Utilities {
     }
 
     public static void displayView(String filePath) {
-        try {
+//        try {
             Stage createUserStage = new Stage();
-            Parent root = FXMLLoader.load(Utilities.class.getClass().getResource(String.format("%s/%s", DEFAULT_VIEW_LOCATION, filePath)));
-            createUserStage.setScene(new Scene(root, Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT));
+//            Parent root = FXMLLoader.load(Utilities.class.getClass().getResource(String.format("%s/%s", DEFAULT_VIEW_LOCATION, filePath)));
+//            createUserStage.setScene(new Scene(root, Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT));
+            createUserStage.setScene(createScene(filePath, Constants.DEFAULT_WIDTH, DEFAULT_HEIGHT));
+            createUserStage.initModality(Modality.WINDOW_MODAL);
             createUserStage.showAndWait();
+//        } catch (IOException e) {
+//            String msg = "Could not find file";
+//            throw new RuntimeException(msg, e);
+//        }
+    }
+
+    public static Scene createScene(String filePath, int width, int height) {
+        try {
+            Parent root = FXMLLoader.load(Utilities.class.getClass().getResource(String.format("%s/%s", DEFAULT_VIEW_LOCATION, filePath)));
+            return new Scene(root, width, height);
         } catch (IOException e) {
             String msg = "Could not find file";
             throw new RuntimeException(msg, e);

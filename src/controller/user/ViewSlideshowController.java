@@ -41,6 +41,6 @@ public class ViewSlideshowController implements Initializable {
         currentIndex += incrementValue;
         if (currentIndex == -1) currentIndex = entries.length - 1;
         if (currentIndex == entries.length) currentIndex = 0;
-        imageContainer.setImage(((AlbumEntry)entries[currentIndex]).getImageView().getImage());
+        imageContainer.setImage(((AlbumEntry)entries[currentIndex]).getImage().getImage());
     }
 }

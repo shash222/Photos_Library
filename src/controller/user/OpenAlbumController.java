@@ -67,12 +67,16 @@ public class OpenAlbumController implements Initializable {
     @FXML
     public void addPhoto(MouseEvent mouseEvent) {
         Utilities.displayView("user/AddPhotoView.fxml");
+        System.out.println("Before");
+        setPhotos();
         photoTable.refresh();
+        System.out.println("After");
     }
 
     @FXML
     public void removePhoto(MouseEvent mouseEvent) {
-
+        if (selectedEntry != null) Utilities.displayAlert(Alert.AlertType.ERROR, "No entry selected");
+        else 
     }
 
     // TODO doesn't work, finish
