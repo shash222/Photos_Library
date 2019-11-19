@@ -1,5 +1,6 @@
 package controller.user;
 
+import constants.Constants;
 import controller.Photos;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -38,10 +39,10 @@ public class OpenAlbumController implements Initializable {
 	static TableView staticPhotoTable;
 
 	List<Photo> photos = new ArrayList<>();
-	public static final String ALBUM_PATH_FORMAT = "src/resources/USERS/%s/%s.txt";
 
 	private void setPhotos() {
-		String albumPath = String.format(ALBUM_PATH_FORMAT, Photos.currentUser, UserController.selectedAlbum);
+		photoTable.getItems().remove(0, photoTable.getItems().size());
+		String albumPath = String.format(Constants.ALBUM_PATH_FORMAT, Photos.currentUser, UserController.selectedAlbum);
 		List<Photo> photosInAlbum = Utilities.readSerializedObjectFromFile(albumPath);
 		imageColumn.setCellValueFactory(new PropertyValueFactory<>("image"));
 		captionColumn.setCellValueFactory(new PropertyValueFactory<>("caption"));
@@ -70,20 +71,31 @@ public class OpenAlbumController implements Initializable {
 	@FXML
 	public void addPhoto(MouseEvent mouseEvent) {
 		Utilities.displayView("user/AddPhotoView.fxml");
-		System.out.println("Before");
-		setPhotos();
-		photoTable.refresh();
-		System.out.println("After");
+		updateTableView();
+//		setPhotos();
+//		photoTable.refresh();
 	}
 
 	@FXML
 	public void removePhoto(MouseEvent mouseEvent) {
-		if (selectedEntry != null)
-			Utilities.displayAlert(Alert.AlertType.ERROR, "No entry selected");
-		// else
+		if (selectedEntry == null) Utilities.displayAlert(Alert.AlertType.ERROR, "No entry selected");
+		else {
+			photoTable.getItems().remove(selectedEntry);
+			updateTableView();
+		}
 	}
 
-	// TODO doesn't work, finish
+	private void updateTableView() {
+		String albumPath = String.format(Constants.ALBUM_PATH_FORMAT, Photos.currentUser, UserController.selectedAlbum);
+		List<Photo> photosInAlbum = new ArrayList();
+		for (Object item : photoTable.getItems()) {
+			photosInAlbum.add(((AlbumEntry) item).getAssociatedPhoto());
+		}
+		Utilities.writeSerializedObjectToFile(photosInAlbum, albumPath);
+		setPhotos();
+		photoTable.refresh();
+	}
+
 	@FXML
 	public void modifyCaption(MouseEvent mouseEvent) {
 		if (selectedEntry == null)
@@ -97,20 +109,21 @@ public class OpenAlbumController implements Initializable {
 			// Traditional way to get the response value.
 			Optional<String> result = dialog.showAndWait();
 			if (result.isPresent()) {
-				String ALBUM_PATH_FORMAT = "src/resources/USERS/%s/%s.txt";
-
-				String albumPath = String.format(ALBUM_PATH_FORMAT, Photos.currentUser, UserController.selectedAlbum);
+//				String ALBUM_PATH_FORMAT = "src/resources/USERS/%s/%s.txt";
+//
+//				String albumPath = String.format(ALBUM_PATH_FORMAT, Photos.currentUser, UserController.selectedAlbum);
 
 				selectedEntry.setCaption(result.get());
-				List<Photo> photosInAlbum = new ArrayList();
-
-				ObservableList items = photoTable.getItems();
-				for (Object item : items) {
-					photosInAlbum.add(((AlbumEntry) item).getAssociatedPhoto());
-				}
-				Utilities.writeSerializedObjectToFile(photosInAlbum, albumPath);
-				setPhotos();
-				photoTable.refresh();
+				updateTableView();
+//				List<Photo> photosInAlbum = new ArrayList();
+//
+//				ObservableList items = photoTable.getItems();
+//				for (Object item : items) {
+//					photosInAlbum.add(((AlbumEntry) item).getAssociatedPhoto());
+//				}
+//				Utilities.writeSerializedObjectToFile(photosInAlbum, albumPath);
+//				setPhotos();
+//				photoTable.refresh();
 
 			}
 		}

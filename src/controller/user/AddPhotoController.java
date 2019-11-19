@@ -1,5 +1,6 @@
 package controller.user;
 
+import constants.Constants;
 import controller.Photos;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,7 +27,6 @@ public class AddPhotoController implements Initializable {
     private TextField captionText;
 
     private static final String ADD_PHOTO_LABEL_FORMAT = "Add photo to your %s album";
-    private static final String ALBUM_PATH_FORMAT = "src/resources/USERS/%s/%s.txt";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -42,7 +42,7 @@ public class AddPhotoController implements Initializable {
             File file = new File(photoPath);
             if (file.isFile()) {
                 try {
-                    String albumPath = String.format(ALBUM_PATH_FORMAT, Photos.currentUser, UserController.selectedAlbum);
+                    String albumPath = String.format(Constants.ALBUM_PATH_FORMAT, Photos.currentUser, UserController.selectedAlbum);
                     Calendar cal = Calendar.getInstance();
                     cal.set(Calendar.MILLISECOND, 0);
                     Photo photo = new Photo(photoPath, (captionText.getText() == null) ? "" : captionText.getText(), new Date(file.lastModified()));
