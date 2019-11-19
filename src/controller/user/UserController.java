@@ -3,7 +3,6 @@ package controller.user;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -36,7 +35,19 @@ public class UserController implements Initializable {
 	}
 
 	public void readAlbums() throws IOException {
+	}
 
+	@FXML
+	public void openSelectedAlbum(MouseEvent mouseEvent) throws IOException {
+		if (selectedAlbum == null) {
+			Utilities.displayAlert(AlertType.ERROR, "No Album selected");
+		} else {
+//			Stage createUserStage = new Stage();
+//			Parent root = FXMLLoader.load(getClass().getResource("../../view/user/OpenAlbumView.fxml"));
+//			createUserStage.setScene(new Scene(root, Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT));
+//			createUserStage.showAndWait();
+			Utilities.displayView("user/OpenAlbumView.fxml");
+		}
 	}
 
 	@FXML
@@ -113,8 +124,6 @@ public class UserController implements Initializable {
 				Photos.users.get(Photos.currentUser).remove(selected);
 				deleteAlbumFile(String.format("%s/%s.txt", Utilities.getUserPath(Photos.currentUser), selected));
 			}
-			
 		}
 	}
-
 }

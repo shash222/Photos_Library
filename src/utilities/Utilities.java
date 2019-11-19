@@ -4,17 +4,29 @@ import constants.Constants;
 import controller.Photos;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+import model.Photo;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.EOFException;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -24,10 +36,11 @@ import static constants.Constants.USERS_FILE_PATH;
 
 
 public class Utilities {
+    private static final String DEFAULT_VIEW_LOCATION = "../../view";
+
     public static void logout() throws IOException {
         Photos.primaryStage.setScene(new Scene(FXMLLoader.load(Utilities.class.getResource("../view/Login.fxml")), Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT));
     }
-
 
     public static void quitApp() {
         System.exit(0);
@@ -109,9 +122,69 @@ public class Utilities {
         } catch (IOException e) {
             throw new RuntimeException( e);
         }
-
     }
 
+    public static void displayView(String filePath) {
+        try {
+            Stage createUserStage = new Stage();
+            Parent root = FXMLLoader.load(Utilities.class.getClass().getResource(String.format("%s/%s", DEFAULT_VIEW_LOCATION, filePath)));
+            createUserStage.setScene(new Scene(root, Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT));
+            createUserStage.showAndWait();
+        } catch (IOException e) {
+            String msg = "Could not find file";
+            throw new RuntimeException(msg, e);
+        }
+    }
 
-	
+    public static List<Photo> readSerializedObjectFromFile(String filePath) {
+        List<Photo> photosInAlbum = new ArrayList<>();
+        try {
+            BufferedReader b = new BufferedReader(new FileReader(filePath));
+            String line;
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath));
+            System.out.println(objectInputStream.available());
+//            while (objectInputStream.available() != 0) {
+//                Object p = objectInputStream.readObject();
+//                System.out.println(p);
+////                photosInAlbum.add(p);
+//            }
+//            Object o;
+//            while ((o = objectInputStream.readObject()) != null) {
+//                photosInAlbum.add((Photo) o);
+//            }
+            // Photos are stored as ArrayLists
+            return (ArrayList<Photo>) objectInputStream.readObject();
+        } catch (EOFException e) {
+            System.out.println("End of file reached, prevented from throwing");
+        } catch (IOException e) {
+            String msg = "IOException";
+            throw new RuntimeException(msg, e);
+        } catch (ClassNotFoundException e) {
+            String msg = "Could not find class";
+            throw new RuntimeException(msg, e);
+        }
+        return photosInAlbum;
+    }
+
+    public static void writeSerializedObjectToFile(List<Photo> photos, String filePath) {
+        try {
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filePath));
+            objectOutputStream.writeObject(photos);
+            objectOutputStream.close();
+        } catch (FileNotFoundException e) {
+            String msg = "Cannot find file";
+            throw new RuntimeException(msg, e);
+        } catch (IOException e) {
+            String msg = "IOException";
+            throw new RuntimeException(msg, e);
+        }
+    }
+
+    public static ImageView getImageView(String location) {
+        return new ImageView(getImage(location));
+    }
+
+    public static Image getImage(String location) {
+        return new Image(new File(location).toURI().toString());
+    }
 }

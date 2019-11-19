@@ -8,17 +8,11 @@ import javafx.scene.input.MouseEvent;
 import model.Photo;
 import utilities.Utilities;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.HashSet;
-
-import constants.Constants;
-
-import static constants.Constants.USERS_FILE_PATH;
 
 public class CreateUserController {
     @FXML
@@ -33,8 +27,7 @@ public class CreateUserController {
         	HashMap<String, HashSet<Photo>> albums = new HashMap<String, HashSet<Photo>>(); 
             Photos.users.put(usernameInputText, albums);
             String filePath = String.format("%s/USER%s.txt", Utilities.getUserPath(usernameInputText), usernameInputText); 
-            // 
-            
+
             File file = new File(filePath);
             file.getParentFile().mkdir();
             try {
@@ -43,9 +36,6 @@ public class CreateUserController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-    		// Utilities.createFile(filePath);
-    		// Utilities.createFile(filePath);
-
             Utilities.displayAlert(AlertType.CONFIRMATION, "User will be added after closing this box");
         }
     }
