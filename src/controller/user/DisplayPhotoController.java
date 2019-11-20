@@ -51,20 +51,7 @@ public class DisplayPhotoController implements Initializable {
             this.imageContainer.setImage(Utilities.getImage(OpenAlbumController.selectedPhoto.getLocation()));  
         }
     }
-    
-    private void updateSerilization() {
-    	tagList.setItems(FXCollections.observableList(new ArrayList(OpenAlbumController.selectedPhoto.getTags().keySet())));
-    	ObservableList items = OpenAlbumController.staticPhotoTable.getItems();
-		List<Photo> photosInAlbum = new ArrayList();
-
-		for (Object item : items) {
-			photosInAlbum.add(((AlbumEntry) item).getAssociatedPhoto());
-		}
-		String albumPath = String.format(Constants.ALBUM_PATH_FORMAT, Photos.currentUser, UserController.selectedAlbum);
-		Utilities.writeSerializedObjectToFile(photosInAlbum, albumPath);
-		OpenAlbumController.staticPhotoTable.refresh();
-    }
-    
+      
     public void addTagView(MouseEvent mouseEvent) {
     	TextInputDialog dialog = new TextInputDialog();
     	dialog.setTitle("Add a TagName");
@@ -74,7 +61,7 @@ public class DisplayPhotoController implements Initializable {
     	// Traditional way to get the response value.
     	Optional<String> result = dialog.showAndWait();
     	if (result.isPresent()){
-    		OpenAlbumController.selectedPhoto.addTag(result.get());
+    		OpenAlbumController.selectedPhoto.addTag(result.get().toLowerCase());
     		Utilities.updateSerilization(tagList, OpenAlbumController.selectedPhoto.getTags().keySet(), OpenAlbumController.staticPhotoTable.getItems(), OpenAlbumController.staticPhotoTable);
     	}
     }

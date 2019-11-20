@@ -59,7 +59,18 @@ public class UserController implements Initializable {
 			this.selectedAlbum = selectedAlbum;
 		}
 	}
+	
+	@FXML
+	public void searchPhotoByTagView(MouseEvent mouseEvent) {
+		Utilities.displayView("user/SearchPhotosByTag.fxml");
+	}
+	
+	@FXML
+	public void searchPhotoByDateView(MouseEvent mouseEvent) {
+		Utilities.displayView("user/SearchPhotosByDate.fxml");
 
+	}
+	
 	public void createAlbumDialog(MouseEvent mouseEvent) throws IOException {
 		TextInputDialog dialog = new TextInputDialog();
 		dialog.setTitle("Create New Album");

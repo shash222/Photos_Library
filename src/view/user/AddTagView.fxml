@@ -5,7 +5,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="312.0" prefWidth="599.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.user.AddTagController">
+<AnchorPane prefHeight="312.0" prefWidth="599.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.user.AddTagController">
    <children>
       <ListView fx:id="valueList" layoutX="36.0" layoutY="81.0" prefHeight="200.0" prefWidth="200.0" />
       <Label fx:id="tagName" layoutX="36.0" layoutY="64.0" text="Placeholder" />

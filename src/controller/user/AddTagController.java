@@ -57,7 +57,7 @@ public class AddTagController  implements Initializable {
     	// Traditional way to get the response value.
     	Optional<String> result = dialog.showAndWait();
     	if (result.isPresent()){
-    		OpenAlbumController.selectedPhoto.addTag(currentTag, result.get());
+    		OpenAlbumController.selectedPhoto.addTag(currentTag, result.get().toLowerCase());
 			Utilities.updateSerilization(valueList, OpenAlbumController.selectedPhoto.getTags().get(currentTag), OpenAlbumController.staticPhotoTable.getItems(), OpenAlbumController.staticPhotoTable);  		
     	}
 	}

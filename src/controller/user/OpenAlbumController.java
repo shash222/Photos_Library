@@ -75,9 +75,9 @@ public class OpenAlbumController implements Initializable {
 	@FXML
 	public void addPhoto(MouseEvent mouseEvent) {
 		Utilities.displayView("user/AddPhotoView.fxml");
-		updateTableView();
-//		setPhotos();
-//		photoTable.refresh();
+		// updateTableView();
+		setPhotos();
+		photoTable.refresh();
 	}
 
 	@FXML
