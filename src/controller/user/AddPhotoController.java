@@ -4,7 +4,7 @@ import constants.Constants;
 import controller.Photos;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -38,30 +38,25 @@ public class AddPhotoController implements Initializable {
     public void addPhotoToAlbum(MouseEvent mouseEvent) {
         String photoPath = this.photoPath.getText();
         if (photoPath.isEmpty()) {
-            Utilities.displayAlert(AlertType.ERROR, "No filepath selected");
+            Utilities.displayAlert(Alert.AlertType.ERROR, "No filepath entered");
         } else {
             File file = new File(photoPath);
             if (file.isFile()) {
                 try {
                     String albumPath = String.format(Constants.ALBUM_PATH_FORMAT, Photos.currentUser, UserController.selectedAlbum);
                     Calendar cal = Calendar.getInstance();
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     cal.set(Calendar.MILLISECOND, 0);
-//                    Date date = new Date(file.lastModified());
-                    System.out.println(dateFormat.format(file.lastModified()));
-                    System.out.println(dateFormat.parse(dateFormat.format(file.lastModified())));
-                    Date date = dateFormat.parse(dateFormat.format(file.lastModified()));
-                    Photo photo = new Photo(photoPath, (captionText.getText() == null) ? "" : captionText.getText(), date);
+                    Photo photo = new Photo(photoPath, (captionText.getText() == null) ? "" : captionText.getText(), new Date(file.lastModified()));
                     List<Photo> photosInAlbum = Utilities.readSerializedObjectFromFile(albumPath);
                     photosInAlbum.add(photo);
                     Utilities.writeSerializedObjectToFile(photosInAlbum, albumPath);
-                    Utilities.displayAlert(AlertType.CONFIRMATION, "User will be added after closing this box");
+                    Utilities.displayAlert(Alert.AlertType.CONFIRMATION, "User will be added after closing this box");
                 } catch (Exception e) {
                     String msg = "Error writing to file";
                     throw new RuntimeException(msg, e);
                 }
             } else {
-                Utilities.displayAlert(AlertType.ERROR, "Photo not found");
+                Utilities.displayAlert(Alert.AlertType.ERROR, "Photo not found");
             }
         }
     }

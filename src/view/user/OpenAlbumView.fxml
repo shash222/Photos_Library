@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="491.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.user.OpenAlbumController">
+<AnchorPane prefHeight="491.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.user.OpenAlbumController">
    <children>
       <Text layoutX="23.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Placeholder Text" wrappingWidth="320.0" />
       <TableView fx:id="photoTable" layoutY="41.0" onMouseClicked="#updateSelected" prefHeight="359.0" prefWidth="601.0">

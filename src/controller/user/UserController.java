@@ -3,6 +3,7 @@ package controller.user;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -37,9 +38,12 @@ public class UserController implements Initializable {
 		public AlbumEntry(String albumName, int numberOfPhotosInAlbum, Date earliestDate, Date latestDate) {
 			this.albumName = albumName;
 			this.numberOfPhotosInAlbum = numberOfPhotosInAlbum;
-			this.dateRange = (earliestDate == null)
-					? "No photos in album"
-					: String.format("%s - %s", earliestDate.toString(), latestDate.toString());
+			if (earliestDate != null) {
+				SimpleDateFormat dateFormat = new SimpleDateFormat("MM.dd.yyyy");
+				this.dateRange = String.format("%s - %s", dateFormat.format(earliestDate), dateFormat.format(latestDate));
+			} else {
+				this.dateRange = "No photos in album";
+			}
 		}
 
 		public String getAlbumName() {
@@ -113,11 +117,8 @@ public class UserController implements Initializable {
 		Utilities.logout();
 	}
 
-	public void readAlbums() throws IOException {
-	}
-
 	@FXML
-	public void openSelectedAlbum(MouseEvent mouseEvent) throws IOException {
+	public void openSelectedAlbum(MouseEvent mouseEvent) {
 		if (selectedAlbum == null) {
 			Utilities.displayAlert(AlertType.ERROR, "No Album selected");
 		} else {
@@ -126,6 +127,7 @@ public class UserController implements Initializable {
 //			createUserStage.setScene(new Scene(root, Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT));
 //			createUserStage.showAndWait();
 			Utilities.displayView("user/OpenAlbumView.fxml");
+			updateTableView();
 		}
 	}
 

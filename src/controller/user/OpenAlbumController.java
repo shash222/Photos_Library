@@ -59,7 +59,9 @@ public class OpenAlbumController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		System.out.println("There");
 		setPhotos();
+		System.out.println("There");
 	}
 
 	@FXML
@@ -74,9 +76,10 @@ public class OpenAlbumController implements Initializable {
 	@FXML
 	public void addPhoto(MouseEvent mouseEvent) {
 		Utilities.displayView("user/AddPhotoView.fxml");
-		updateTableView();
-//		setPhotos();
-//		photoTable.refresh();
+		// For some reason updateTableView() doesn't work here only
+		// updateTableView();
+		setPhotos();
+		photoTable.refresh();
 	}
 
 	@FXML
@@ -173,6 +176,7 @@ public class OpenAlbumController implements Initializable {
 
 	@FXML
 	public void viewSlideshow(MouseEvent mouseEvent) {
-		Utilities.displayView("user/ViewSlideshowView.fxml");
+		if (photoTable.getItems().size() == 0) Utilities.displayAlert(Alert.AlertType.ERROR, "No photos in album");
+		else Utilities.displayView("user/ViewSlideshowView.fxml");
 	}
 }

@@ -15,8 +15,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import model.AlbumEntry;
 import model.Photo;
+import model.PhotoEntry;
 import utilities.Utilities;
 
 import java.net.URL;
@@ -58,7 +58,7 @@ public class DisplayPhotoController implements Initializable {
 		List<Photo> photosInAlbum = new ArrayList();
 
 		for (Object item : items) {
-			photosInAlbum.add(((AlbumEntry) item).getAssociatedPhoto());
+			photosInAlbum.add(((PhotoEntry) item).getAssociatedPhoto());
 		}
 		String albumPath = String.format(Constants.ALBUM_PATH_FORMAT, Photos.currentUser, UserController.selectedAlbum);
 		Utilities.writeSerializedObjectToFile(photosInAlbum, albumPath);
