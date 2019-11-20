@@ -7,4 +7,7 @@ public class Constants {
     
     public static final String USERS_FILE_PATH = "src/resources/USERS/users.txt";
     
+	public static final String ALBUM_PATH_FORMAT = "src/resources/USERS/%s/%s.txt";
+
+    
   }

@@ -2,17 +2,22 @@ package utilities;
 
 import constants.Constants;
 import controller.Photos;
+import controller.user.OpenAlbumController;
+import controller.user.UserController;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.AlbumEntry;
 import model.Photo;
 
 import java.io.BufferedReader;
@@ -32,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static constants.Constants.DEFAULT_HEIGHT;
 import static constants.Constants.USERS_FILE_PATH;
@@ -92,6 +98,31 @@ public class Utilities {
 
 		}
 	}
+    
+    public static void updateSerilization(ListView listView, Set arr, ObservableList items, ListView table) {
+    	listView.setItems(FXCollections.observableList(new ArrayList(arr)));
+		List<Photo> photosInAlbum = new ArrayList();
+
+		for (Object item : items) {
+			photosInAlbum.add(((AlbumEntry) item).getAssociatedPhoto());
+		}
+		String albumPath = String.format(Constants.ALBUM_PATH_FORMAT, Photos.currentUser, UserController.selectedAlbum);
+		Utilities.writeSerializedObjectToFile(photosInAlbum, albumPath);
+		table.refresh();
+	
+    }
+    
+    public static void updateSerilization(ListView listView, Set arr, ObservableList items, TableView table) {
+    	listView.setItems(FXCollections.observableList(new ArrayList(arr)));
+		List<Photo> photosInAlbum = new ArrayList();
+
+		for (Object item : items) {
+			photosInAlbum.add(((AlbumEntry) item).getAssociatedPhoto());
+		}
+		String albumPath = String.format(Constants.ALBUM_PATH_FORMAT, Photos.currentUser, UserController.selectedAlbum);
+		Utilities.writeSerializedObjectToFile(photosInAlbum, albumPath);
+		table.refresh();
+    }
 
 	public static void deleteFolder(String folderPath) {
         File folder = new File(folderPath);
