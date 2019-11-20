@@ -5,13 +5,13 @@ import utilities.Utilities;
 
 import java.util.Date;
 
-public class AlbumEntry {
+public class PhotoEntry {
     private ImageView image;
     private String caption;
     private Date dateTaken;
     private Photo associatedPhoto;
 
-    public AlbumEntry (String location, String caption,  Date dateTaken, Photo associatedPhoto) {
+    public PhotoEntry(String location, String caption, Date dateTaken, Photo associatedPhoto) {
         this.image = Utilities.getImageView(location);
         this.caption = caption;
         this.dateTaken = dateTaken;

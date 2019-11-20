@@ -13,6 +13,7 @@ import utilities.Utilities;
 
 import java.io.File;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -44,8 +45,13 @@ public class AddPhotoController implements Initializable {
                 try {
                     String albumPath = String.format(Constants.ALBUM_PATH_FORMAT, Photos.currentUser, UserController.selectedAlbum);
                     Calendar cal = Calendar.getInstance();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     cal.set(Calendar.MILLISECOND, 0);
-                    Photo photo = new Photo(photoPath, (captionText.getText() == null) ? "" : captionText.getText(), new Date(file.lastModified()));
+//                    Date date = new Date(file.lastModified());
+                    System.out.println(dateFormat.format(file.lastModified()));
+                    System.out.println(dateFormat.parse(dateFormat.format(file.lastModified())));
+                    Date date = dateFormat.parse(dateFormat.format(file.lastModified()));
+                    Photo photo = new Photo(photoPath, (captionText.getText() == null) ? "" : captionText.getText(), date);
                     List<Photo> photosInAlbum = Utilities.readSerializedObjectFromFile(albumPath);
                     photosInAlbum.add(photo);
                     Utilities.writeSerializedObjectToFile(photosInAlbum, albumPath);

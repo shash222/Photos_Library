@@ -2,6 +2,7 @@ package utilities;
 
 import constants.Constants;
 import controller.Photos;
+import controller.user.UserController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,11 +10,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Photo;
+import model.PhotoEntry;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -41,6 +44,9 @@ public class Utilities {
     private static final String DEFAULT_VIEW_LOCATION = "../../view";
 
     public static void logout() throws IOException {
+        Photos.currentUser = null;
+        UserController.selectedAlbumEntry = null;
+        UserController.selectedAlbum = null;
         Photos.primaryStage.setScene(new Scene(FXMLLoader.load(Utilities.class.getResource("../view/Login.fxml")), Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT));
     }
 
@@ -69,8 +75,7 @@ public class Utilities {
         listView.refresh();
         writeToFile(path, updatedList);
     }
-   
-    
+
     public static void transferAlbumContent(String pathFrom, String pathTo) throws IOException {
 		BufferedReader photos = new BufferedReader(new FileReader(pathFrom));
         String line;
@@ -114,6 +119,8 @@ public class Utilities {
     }
 
     public static void writeToFile(String filePath, List<String> content) {
+        for (String s : content) System.out.println(s);
+        System.out.println("End");
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
             for (String user : content) {
@@ -156,7 +163,6 @@ public class Utilities {
             BufferedReader b = new BufferedReader(new FileReader(filePath));
             String line;
             ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filePath));
-            System.out.println(objectInputStream.available());
 //            while (objectInputStream.available() != 0) {
 //                Object p = objectInputStream.readObject();
 //                System.out.println(p);
@@ -178,6 +184,22 @@ public class Utilities {
             throw new RuntimeException(msg, e);
         }
         return photosInAlbum;
+    }
+
+    public static List<String> getUserAlbums(String filePath) {
+        try {
+            List<String> userAlbumList = new ArrayList();
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                userAlbumList.add(line);
+            }
+            reader.close();
+            return userAlbumList;
+        } catch (IOException e) {
+            String msg = "Could not find file at location " + filePath;
+            throw new RuntimeException(msg, e);
+        }
     }
 
     public static void writeSerializedObjectToFile(List<Photo> photos, String filePath) {
