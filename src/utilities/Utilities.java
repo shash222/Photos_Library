@@ -4,6 +4,7 @@ import constants.Constants;
 import controller.Photos;
 import controller.user.UserController;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,14 +31,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static constants.Constants.DEFAULT_HEIGHT;
-import static constants.Constants.USERS_FILE_PATH;
 
 
 public class Utilities {
@@ -97,6 +96,31 @@ public class Utilities {
 
 		}
 	}
+    
+    public static void updateSerilization(ListView listView, Set arr, ObservableList items, ListView table) {
+    	listView.setItems(FXCollections.observableList(new ArrayList(arr)));
+		List<Photo> photosInAlbum = new ArrayList();
+
+		for (Object item : items) {
+			photosInAlbum.add(((PhotoEntry) item).getAssociatedPhoto());
+		}
+		String albumPath = String.format(Constants.ALBUM_PATH_FORMAT, Photos.currentUser, UserController.selectedAlbum);
+		Utilities.writeSerializedObjectToFile(photosInAlbum, albumPath);
+		table.refresh();
+	
+    }
+    
+    public static void updateSerilization(ListView listView, Set arr, ObservableList items, TableView table) {
+    	listView.setItems(FXCollections.observableList(new ArrayList(arr)));
+		List<Photo> photosInAlbum = new ArrayList();
+
+		for (Object item : items) {
+			photosInAlbum.add(((PhotoEntry) item).getAssociatedPhoto());
+		}
+		String albumPath = String.format(Constants.ALBUM_PATH_FORMAT, Photos.currentUser, UserController.selectedAlbum);
+		Utilities.writeSerializedObjectToFile(photosInAlbum, albumPath);
+		table.refresh();
+    }
 
 	public static void deleteFolder(String folderPath) {
         File folder = new File(folderPath);

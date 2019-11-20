@@ -16,11 +16,14 @@ import model.Photo;
 
 import utilities.Utilities;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import constants.Constants;
 
 // TODO Fix bug where list doesn't update unless this view is reopened
 public class OpenAlbumController implements Initializable {
@@ -40,6 +43,7 @@ public class OpenAlbumController implements Initializable {
 	List<Photo> photos = new ArrayList<>();
 
 	private void setPhotos() {
+
 		photoTable.getItems().remove(0, photoTable.getItems().size());
 		String albumPath = String.format(Constants.ALBUM_PATH_FORMAT, Photos.currentUser, UserController.selectedAlbum);
 		List<Photo> photosInAlbum = Utilities.readSerializedObjectFromFile(albumPath);
@@ -129,22 +133,14 @@ public class OpenAlbumController implements Initializable {
 	}
 
 	@FXML
-	public void displayPhoto(MouseEvent mouseEvent) {
+	public void displayPhoto(MouseEvent mouseEvent) throws IOException {
 		if (selectedEntry == null)
 			Utilities.displayAlert(Alert.AlertType.ERROR, "No entry selected");
 		else
 			Utilities.displayView("user/DisplayPhotoView.fxml");
 	}
 
-	@FXML
-	public void addTag(MouseEvent mouseEvent) {
-
-	}
-
-	@FXML
-	public void removeTag(MouseEvent mouseEvent) {
-
-	}
+	
 
 	private void copyPhoto(String title, String header, String text) {
 		if (selectedEntry == null) Utilities.displayAlert(Alert.AlertType.ERROR, "No entry selected");

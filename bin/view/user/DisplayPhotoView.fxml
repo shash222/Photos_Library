@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.user.DisplayPhotoController">
+<AnchorPane prefHeight="554.0" prefWidth="671.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.user.DisplayPhotoController">
    <children>
-      <Label fx:id="captionField" layoutX="14.0" layoutY="251.0" text="Placeholder Caption" />
-      <Label layoutX="332.0" layoutY="56.0" text="Date Taken: " />
-      <TextField fx:id="dateTakenField" editable="false" layoutX="405.0" layoutY="52.0" prefHeight="25.0" prefWidth="183.0" />
-      <Label layoutX="351.0" layoutY="113.0" text="Tags:" />
-      <TableView layoutX="405.0" layoutY="113.0" prefHeight="243.0" prefWidth="183.0">
-        <columns>
-          <TableColumn prefWidth="92.0" text="Key" />
-          <TableColumn prefWidth="90.0" text="Value" />
-        </columns>
-      </TableView>
-      <ImageView fx:id="imageContainer" fitHeight="243.0" fitWidth="306.0" layoutX="6.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="captionField" layoutX="282.0" layoutY="49.0" text="Placeholder Caption" />
+      <Label layoutX="14.0" layoutY="14.0" text="Date Taken: " />
+      <TextField fx:id="dateTakenField" editable="false" layoutX="80.0" layoutY="10.0" prefHeight="25.0" prefWidth="183.0" />
+      <Label layoutX="19.0" layoutY="323.0" text="Tags:" />
+      <ImageView fx:id="imageContainer" fitHeight="243.0" fitWidth="306.0" layoutX="183.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true" />
+      <Button layoutX="282.0" layoutY="341.0" mnemonicParsing="false" onMouseClicked="#addTagView" prefHeight="25.0" prefWidth="164.0" text="Add New Tag" />
+      <Button layoutX="282.0" layoutY="383.0" mnemonicParsing="false" text="Edit Values for Selected Tag" onMouseClicked="#editTagView" />
+      <ListView fx:id="tagList" layoutX="14.0" layoutY="341.0" prefHeight="200.0" prefWidth="248.0" />
+      <Button layoutX="282.0" layoutY="429.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="164.0" text="Delete Selected Tag" onMouseClicked="#deleteTag" />
    </children>
 </AnchorPane>
