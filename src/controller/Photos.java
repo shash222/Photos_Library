@@ -53,7 +53,7 @@ public class Photos extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-    	readUsers();
+        readUsers();
         Parent root = FXMLLoader.load(getClass().getResource("../view/Login.fxml"));
         this.primaryStage = primaryStage;
         primaryStage.setTitle("Photos Library");

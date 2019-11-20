@@ -15,8 +15,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import model.AlbumEntry;
 import model.Photo;
+import model.PhotoEntry;
 import utilities.Utilities;
 
 import java.net.URL;
@@ -51,7 +51,20 @@ public class DisplayPhotoController implements Initializable {
             this.imageContainer.setImage(Utilities.getImage(OpenAlbumController.selectedPhoto.getLocation()));  
         }
     }
-      
+
+    private void updateSerilization() {
+    	tagList.setItems(FXCollections.observableList(new ArrayList(OpenAlbumController.selectedPhoto.getTags().keySet())));
+    	ObservableList items = OpenAlbumController.staticPhotoTable.getItems();
+		List<Photo> photosInAlbum = new ArrayList();
+
+		for (Object item : items) {
+			photosInAlbum.add(((PhotoEntry) item).getAssociatedPhoto());
+		}
+		String albumPath = String.format(Constants.ALBUM_PATH_FORMAT, Photos.currentUser, UserController.selectedAlbum);
+		Utilities.writeSerializedObjectToFile(photosInAlbum, albumPath);
+		OpenAlbumController.staticPhotoTable.refresh();
+    }
+    
     public void addTagView(MouseEvent mouseEvent) {
     	TextInputDialog dialog = new TextInputDialog();
     	dialog.setTitle("Add a TagName");

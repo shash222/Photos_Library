@@ -4,7 +4,7 @@ import constants.Constants;
 import controller.Photos;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -13,6 +13,7 @@ import utilities.Utilities;
 
 import java.io.File;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -37,7 +38,7 @@ public class AddPhotoController implements Initializable {
     public void addPhotoToAlbum(MouseEvent mouseEvent) {
         String photoPath = this.photoPath.getText();
         if (photoPath.isEmpty()) {
-            Utilities.displayAlert(AlertType.ERROR, "No filepath selected");
+            Utilities.displayAlert(Alert.AlertType.ERROR, "No filepath entered");
         } else {
             File file = new File(photoPath);
             if (file.isFile()) {
@@ -49,13 +50,13 @@ public class AddPhotoController implements Initializable {
                     List<Photo> photosInAlbum = Utilities.readSerializedObjectFromFile(albumPath);
                     photosInAlbum.add(photo);
                     Utilities.writeSerializedObjectToFile(photosInAlbum, albumPath);
-                    Utilities.displayAlert(AlertType.CONFIRMATION, "User will be added after closing this box");
+                    Utilities.displayAlert(Alert.AlertType.CONFIRMATION, "User will be added after closing this box");
                 } catch (Exception e) {
                     String msg = "Error writing to file";
                     throw new RuntimeException(msg, e);
                 }
             } else {
-                Utilities.displayAlert(AlertType.ERROR, "Photo not found");
+                Utilities.displayAlert(Alert.AlertType.ERROR, "Photo not found");
             }
         }
     }

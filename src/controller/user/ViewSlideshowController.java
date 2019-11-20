@@ -5,7 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import model.AlbumEntry;
+import model.PhotoEntry;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -41,6 +41,6 @@ public class ViewSlideshowController implements Initializable {
         currentIndex += incrementValue;
         if (currentIndex == -1) currentIndex = entries.length - 1;
         if (currentIndex == entries.length) currentIndex = 0;
-        imageContainer.setImage(((AlbumEntry)entries[currentIndex]).getImage().getImage());
+        imageContainer.setImage(((PhotoEntry)entries[currentIndex]).getImage().getImage());
     }
 }

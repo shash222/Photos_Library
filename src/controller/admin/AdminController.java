@@ -37,7 +37,7 @@ public class AdminController implements Initializable {
     }
 
     @FXML
-    public void displayCreateUserView(MouseEvent mouseEvent) throws IOException {
+    public void displayCreateUserView(MouseEvent mouseEvent) {
         Utilities.displayView("admin/CreateUserView.fxml");
         Utilities.updateListView(userList, new ArrayList<>(Photos.users.keySet()), constants.Constants.USERS_FILE_PATH);
     }
