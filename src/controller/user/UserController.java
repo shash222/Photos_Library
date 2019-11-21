@@ -175,6 +175,7 @@ public class UserController implements Initializable {
 	@FXML
 	public void searchPhotoByTagView(MouseEvent mouseEvent) {
 		Utilities.displayView("user/SearchPhotosByTag.fxml");
+		updateTableView();
 	}
 
 	/**
@@ -184,6 +185,7 @@ public class UserController implements Initializable {
 	@FXML
 	public void searchPhotoByDateView(MouseEvent mouseEvent) {
 		Utilities.displayView("user/SearchPhotosByDate.fxml");
+		updateTableView(); 
 
 	}
 
