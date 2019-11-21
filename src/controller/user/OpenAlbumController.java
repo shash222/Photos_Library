@@ -146,7 +146,7 @@ public class OpenAlbumController implements Initializable {
 
 	
 
-	private void copyPhoto(String title, String header, String text) {
+	private boolean copyPhoto(String title, String header, String text) {
 		if (selectedEntry == null) Utilities.displayAlert(Alert.AlertType.ERROR, "No entry selected");
 		else {
 			TextInputDialog dialog = new TextInputDialog();
@@ -159,19 +159,22 @@ public class OpenAlbumController implements Initializable {
 				List<Photo> photosInTargetAlbum = Utilities.readSerializedObjectFromFile(albumPath);
 				photosInTargetAlbum.add(selectedPhoto);
 				Utilities.writeSerializedObjectToFile(photosInTargetAlbum, albumPath);
+				return true; 
 			}
 		}
+		return false; 
 	}
 
 	@FXML
 	public void copyToNewAlbum(MouseEvent mouseEvent) {
-		copyPhoto("Copy Photo", "Rename", "Album to copy to: ");
+		copyPhoto("Copy Photo", "Copy", "Album to copy to: ");
 	}
 
 	@FXML
 	public void moveToNewAlbum(MouseEvent mouseEvent) {
-		copyPhoto("Move photo", "Move", "Album to move to: ");
-		photoTable.getItems().remove(selectedEntry);
+		if(copyPhoto("Move photo", "Move", "Album to move to: ")) {
+			photoTable.getItems().remove(selectedEntry);
+		}
 		updateTableView();
 	}
 
