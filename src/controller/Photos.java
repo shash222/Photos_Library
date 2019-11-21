@@ -14,11 +14,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 import static constants.Constants.USERS_FILE_PATH;
 
+/**
+ * Main controller that serves as entry point into program
+ * @author Mohammed Alnadi
+ * @author Salman Hashmi
+ */
 public class Photos extends Application {
     public static HashMap<String, HashMap<String,HashSet<Photo>>> users = new HashMap<String, HashMap<String,HashSet<Photo>>>();
     
@@ -26,10 +29,18 @@ public class Photos extends Application {
 
     public static Stage primaryStage;
 
+    /**
+     * entry point into class
+     * @param args args
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Reads list of users from file to be compared against when validating login
+     * @throws IOException thrown if fxml ui class isn't found
+     */
     public static void readUsers() throws IOException{
         BufferedReader readerUsers = new BufferedReader(new FileReader(USERS_FILE_PATH));
         String line;
@@ -51,6 +62,11 @@ public class Photos extends Application {
         
     }
 
+    /**
+     * Starts program
+     * @param primaryStage default param
+     * @throws IOException thrown if fxml ui view file isn't found
+     */
     @Override
     public void start(Stage primaryStage) throws IOException {
         readUsers();

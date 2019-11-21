@@ -9,8 +9,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
@@ -28,6 +26,11 @@ import java.util.ResourceBundle;
 import constants.Constants;
 import controller.Photos;
 
+/**
+ * Controller that handles displaying the photo and its details
+ * @author Mohammed Alnadi
+ * @author Salman Hashmi
+ */
 public class DisplayPhotoController implements Initializable {
 	
 	@FXML
@@ -39,7 +42,13 @@ public class DisplayPhotoController implements Initializable {
     @FXML
     private ImageView imageContainer;
     
-    public static String currentTag; 
+    public static String currentTag;
+
+    /**
+     * Runs when class is triggered
+     * @param location default param
+     * @param resources default param
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (OpenAlbumController.selectedPhoto == null) {
@@ -52,19 +61,10 @@ public class DisplayPhotoController implements Initializable {
         }
     }
 
-    private void updateSerilization() {
-    	tagList.setItems(FXCollections.observableList(new ArrayList(OpenAlbumController.selectedPhoto.getTags().keySet())));
-    	ObservableList items = OpenAlbumController.staticPhotoTable.getItems();
-		List<Photo> photosInAlbum = new ArrayList();
-
-		for (Object item : items) {
-			photosInAlbum.add(((PhotoEntry) item).getAssociatedPhoto());
-		}
-		String albumPath = String.format(Constants.ALBUM_PATH_FORMAT, Photos.currentUser, UserController.selectedAlbum);
-		Utilities.writeSerializedObjectToFile(photosInAlbum, albumPath);
-		OpenAlbumController.staticPhotoTable.refresh();
-    }
-    
+    /**
+     * Adds tag to photo
+     * @param mouseEvent response to mouse click
+     */
     public void addTagView(MouseEvent mouseEvent) {
     	TextInputDialog dialog = new TextInputDialog();
     	dialog.setTitle("Add a TagName");
@@ -78,7 +78,11 @@ public class DisplayPhotoController implements Initializable {
     		Utilities.updateSerilization(tagList, OpenAlbumController.selectedPhoto.getTags().keySet(), OpenAlbumController.staticPhotoTable.getItems(), OpenAlbumController.staticPhotoTable);
     	}
     }
-    
+
+    /**
+     * Deletes tag from photo
+     * @param mouseEvent response to clicking button
+     */
     public void deleteTag(MouseEvent mouseEvent) {
         String selectedTag = tagList.getSelectionModel().getSelectedItem();
         currentTag = selectedTag; 
@@ -89,7 +93,11 @@ public class DisplayPhotoController implements Initializable {
     		Utilities.updateSerilization(tagList, OpenAlbumController.selectedPhoto.getTags().keySet(), OpenAlbumController.staticPhotoTable.getItems(), OpenAlbumController.staticPhotoTable);
         }
     }
-    
+
+    /**
+     * Edits tags in photo
+     * @param mouseEvent response to clicking button
+     */
     public void editTagView(MouseEvent mouseEvent) {
     	String selectedTag = tagList.getSelectionModel().getSelectedItem();
         currentTag = selectedTag; 

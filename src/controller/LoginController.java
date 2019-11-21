@@ -12,16 +12,19 @@ import utilities.Utilities;
 
 import java.io.IOException;
 
+/**
+ * Controller that handles login
+ * @author Mohammed Alnadi
+ * @author Salman Hashmi
+ */
 public class LoginController {
     @FXML
     private TextField usernameInput;
 
-
-    // TODO: Refactor into Utilities???
-    private Scene createScene(String path, int width, int height) throws IOException {
-        return new Scene(FXMLLoader.load(getClass().getResource(path)), width, height);
-    }
-
+    /**
+     * Quits the app
+     * @param mouseEvent response to clicking button
+     */
     @FXML
     public void quitApp(MouseEvent mouseEvent) {
         Utilities.quitApp();
@@ -29,8 +32,8 @@ public class LoginController {
 
     /**
      * Validates login if login meets one of the following criteria:
-     *   - login equals "admin" -> replace stage with AdminView
-     *   - login equals an entry in Photos.users -> replace stage with UserView
+     *   - login equals "admin" , replace stage with AdminView
+     *   - login equals an entry in Photos.users, replace stage with UserView
      * Otherwise login is unsuccessful, and user is alerted accordingly
      * @param mouseEvent mouseEvent
      * @throws IOException if resource cannot be loaded
@@ -51,10 +54,6 @@ public class LoginController {
             Utilities.displayAlert(Alert.AlertType.ERROR, "Error: invalid login");
         }
         Photos.primaryStage.setScene(rootScene);
-    }
-    
-    public String returnUser() {
-    	return  usernameInput.getText();
     }
     
 }

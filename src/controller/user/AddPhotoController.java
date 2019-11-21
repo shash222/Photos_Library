@@ -13,12 +13,16 @@ import utilities.Utilities;
 
 import java.io.File;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Controller that adds photo to album
+ * @author Mohammed Alnadi
+ * @author Salman Hashmi
+ */
 public class AddPhotoController implements Initializable {
     @FXML
     private Label addPhotoLabel;
@@ -29,11 +33,20 @@ public class AddPhotoController implements Initializable {
 
     private static final String ADD_PHOTO_LABEL_FORMAT = "Add photo to your %s album";
 
+    /**
+     * Runs whenever controller is triggered
+     * @param location default param
+     * @param resources default param
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.addPhotoLabel.setText(String.format(ADD_PHOTO_LABEL_FORMAT, UserController.selectedAlbum));
     }
 
+    /**
+     * Adds photo to album
+     * @param mouseEvent response to clicking button
+     */
     @FXML
     public void addPhotoToAlbum(MouseEvent mouseEvent) {
         String photoPath = this.photoPath.getText();

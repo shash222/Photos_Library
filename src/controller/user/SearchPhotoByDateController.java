@@ -15,6 +15,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Searches for photo between date range
+ * @author Mohammed Alnadi
+ * @author Salman Hashmi
+ */
 public class SearchPhotoByDateController {
     @FXML
     DatePicker rangeStartDate;
@@ -23,6 +28,10 @@ public class SearchPhotoByDateController {
 
     static List<Photo> searchResult = new ArrayList<>();
 
+    /**
+     * Returns list of photos between designated dates
+     * @param mouseEvent response to clicking button
+     */
     @FXML
     public void getResults(MouseEvent mouseEvent) {
         LocalDate startDate = rangeStartDate.getValue();

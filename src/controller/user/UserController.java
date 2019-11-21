@@ -31,6 +31,11 @@ import model.Photo;
 
 import utilities.Utilities;
 
+/**
+ * Class handling user subsystem functionality
+ * @author Mohammed Alnadi
+ * @author Salman Hashmi
+ */
 public class UserController implements Initializable {
 	public class AlbumEntry {
 		private String albumName;
@@ -70,11 +75,12 @@ public class UserController implements Initializable {
 	@FXML
 	private TableColumn dateRangeColumn;
 
-	private String userPath = Utilities.getUserTxtPath(Photos.currentUser);
 	public static String selectedAlbum;
 	public static AlbumEntry selectedAlbumEntry;
-//	private ListView<String> albumList;
 
+	/**
+	 * Displays existing albums and details on view
+	 */
 	private void setup() {
 		albumsTable.getItems().remove(0, albumsTable.getItems().size());
 
@@ -103,6 +109,9 @@ public class UserController implements Initializable {
 //		albumList.setItems(FXCollections.observableList(new ArrayList(Photos.users.get(Photos.currentUser).keySet())));
 	}
 
+	/**
+	 * Updates table anytime a change is made to an album
+	 */
 	private void updateTableView() {
 		String userAlbumsFilePath = String.format(Constants.USER_ALBUM_LIST_PATH_FORMAT, Photos.currentUser, Photos.currentUser);
 		Utilities.writeToFile(userAlbumsFilePath, new ArrayList<>(Photos.users.get(Photos.currentUser).keySet()));
@@ -110,15 +119,29 @@ public class UserController implements Initializable {
 		albumsTable.refresh();
 	}
 
+	/**
+	 * Runs as soon as controller is triggered, initializes album data in table view
+	 * @param location required parameter
+	 * @param resources required parameter
+	 */
 	public void initialize(URL location, ResourceBundle resources) {
 		setup();
 	}
 
+	/**
+	 * Logs out of account
+	 * @param mouseEvent response to clicking button
+	 * @throws IOException thrown if view couldn't be found
+	 */
 	@FXML
 	public void logout(MouseEvent mouseEvent) throws IOException {
 		Utilities.logout();
 	}
 
+	/**
+	 * Opens new view with photos in album and allows modification of album
+	 * @param mouseEvent response to clicking button
+	 */
 	@FXML
 	public void openSelectedAlbum(MouseEvent mouseEvent) {
 		if (selectedAlbum == null) {
@@ -133,6 +156,10 @@ public class UserController implements Initializable {
 		}
 	}
 
+	/**
+	 * updates static albumSelected to be used in other classes when tableview is clicked
+	 * @param mouseEvent response to clicking button
+	 */
 	@FXML
 	public void setAlbumSelected(MouseEvent mouseEvent) {
 		selectedAlbumEntry = ((AlbumEntry) albumsTable.getSelectionModel().getSelectedItem());
@@ -140,18 +167,31 @@ public class UserController implements Initializable {
 			this.selectedAlbum = selectedAlbumEntry.getAlbumName();
 		}
 	}
-	
+
+	/**
+	 * Displays searchPhotoByTag view
+	 * @param mouseEvent response to clicking button
+	 */
 	@FXML
 	public void searchPhotoByTagView(MouseEvent mouseEvent) {
 		Utilities.displayView("user/SearchPhotosByTag.fxml");
 	}
-	
+
+	/**
+	 * Displays search photo by date view
+	 * @param mouseEvent response to clicking button
+	 */
 	@FXML
 	public void searchPhotoByDateView(MouseEvent mouseEvent) {
 		Utilities.displayView("user/SearchPhotosByDate.fxml");
 
 	}
-	
+
+	/**
+	 * Displays create album dialog to take in user input and create album if one of the same name doesn't exist
+	 * @param mouseEvent response to clicking button
+	 * @throws IOException thrown in case view file isn't found
+	 */
 	public void createAlbumDialog(MouseEvent mouseEvent) throws IOException {
 		TextInputDialog dialog = new TextInputDialog();
 		dialog.setTitle("Create New Album");
@@ -168,6 +208,10 @@ public class UserController implements Initializable {
 		}
 	}
 
+	/**
+	 * Creates album  file and adds to list of albums to the user
+	 * @param albumName Name of album to create
+	 */
 	private void createAlbum(String albumName) {
 		Photos.users.get(Photos.currentUser).put(albumName, new HashSet<Photo>());
 		String filePath = String.format("%s/%s.txt",  Utilities.getUserPath(Photos.currentUser), albumName);
@@ -180,6 +224,10 @@ public class UserController implements Initializable {
 //		Utilities.updateListView(albumList, new ArrayList<>(Photos.users.get(Photos.currentUser).keySet()), userPath);
 	}
 
+	/**
+	 * Displays dialog that deletes the selected album
+	 * @param mouseEvent response to clicking button
+	 */
 	@FXML
 	public void deleteAlbumDialog(MouseEvent mouseEvent) {
 		if (selectedAlbum == null) {
@@ -191,12 +239,21 @@ public class UserController implements Initializable {
 			
 		}
 	}
-	
+
+	/**
+	 * Deletes album file from project files
+	 * @param path path of file to delete
+	 */
 	private void deleteAlbumFile(String path) {
 		Utilities.deleteFile(path);
 		updateTableView();
 	}
 
+	/**
+	 * Renames album filename and in list of user albums
+	 * @param mouseEvent response to clicking button
+	 * @throws IOException thrown in case fxml file isn't found
+	 */
 	public void renameAlbum(MouseEvent mouseEvent) throws IOException {
 		if (selectedAlbumEntry == null) Utilities.displayAlert(AlertType.ERROR, "No Album selected");
 		else {

@@ -1,5 +1,10 @@
 package constants;
 
+/**
+ * Constant values that are used across multiple classes
+ * @author Mohammed Alnadi
+ * @author Salman Hashmi
+ */
 public class Constants {
     public static final int DEFAULT_WIDTH = 600;
 

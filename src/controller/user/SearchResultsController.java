@@ -16,6 +16,11 @@ import model.Photo;
 import model.PhotoEntry;
 import utilities.Utilities;
 
+/**
+ * Controller that handles logic that displays search results
+ * @author Mohammed Alnadi
+ * @author Salman Hashmi
+ */
 public class SearchResultsController implements Initializable {
 	
 	@FXML
@@ -32,6 +37,9 @@ public class SearchResultsController implements Initializable {
 
 	List<Photo> photos = new ArrayList<>();
 
+	/**
+	 * Sets the photos in the tableview from the search results
+	 */
 	private void setPhotos() {
 
 		resultsTable.getItems().remove(0, resultsTable.getItems().size());
@@ -52,6 +60,11 @@ public class SearchResultsController implements Initializable {
 		staticResultsTable = resultsTable;
 	}
 
+	/**
+	 * Runs when class is triggered
+	 * @param location default param
+	 * @param resources default param
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		System.out.println("There");

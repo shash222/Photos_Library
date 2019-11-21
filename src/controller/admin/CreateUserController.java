@@ -14,10 +14,19 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * Controller that handles creating user functionality
+ * @author Mohammed Alnadi
+ * @author Salman Hashmi
+ */
 public class CreateUserController {
     @FXML
     private TextField usernameInput;
 
+    /**
+     * Create user logic
+     * @param mouseEvent response to clicking button
+     */
     @FXML
     private void createUser(MouseEvent mouseEvent)  {
         String usernameInputText = usernameInput.getText();
@@ -33,7 +42,6 @@ public class CreateUserController {
             try {
 				file.createNewFile();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
             Utilities.displayAlert(AlertType.CONFIRMATION, "User will be added after closing this box");

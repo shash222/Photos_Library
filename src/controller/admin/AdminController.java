@@ -1,47 +1,61 @@
 package controller.admin;
 
-import constants.Constants;
 import controller.Photos;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import utilities.Utilities;
 
-import javax.rmi.CORBA.Util;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for admin subsyste
+ * @author Mohammed Alnadi
+ * @author Salman Hashmi
+ */
 public class AdminController implements Initializable {
     @FXML
     private ListView<String> userList;
 
+    /**
+     * Runs as soon as controller is triggered
+     * @param location default parameter
+     * @param resources default parameter
+     */
     public void initialize(URL location, ResourceBundle resources) {
         userList.setItems(FXCollections.observableList(new ArrayList(Photos.users.keySet())));
     }
 
+    /**
+     * Logs admin out of program
+     * @param mouseEvent response to clicking button
+     * @throws IOException thrown in case fxml ui file isn't found
+     */
     @FXML
     public void logout(MouseEvent mouseEvent) throws IOException {
         Utilities.logout();
     }
 
+    /**
+     * Displays create user view to create new user
+     * @param mouseEvent response to clicking button
+     */
     @FXML
     public void displayCreateUserView(MouseEvent mouseEvent) {
         Utilities.displayView("admin/CreateUserView.fxml");
         Utilities.updateListView(userList, new ArrayList<>(Photos.users.keySet()), constants.Constants.USERS_FILE_PATH);
     }
 
+    /**
+     * Deletes user's files
+     * @param mouseEvent response to clicking button
+     */
     @FXML
     public void deleteUser(MouseEvent mouseEvent) {
         String selected = userList.getSelectionModel().getSelectedItem();

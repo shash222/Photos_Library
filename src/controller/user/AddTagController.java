@@ -15,6 +15,11 @@ import javafx.scene.control.TextInputDialog;
 import model.Photo;
 import utilities.Utilities;
 
+/**
+ * Controller that handles adding tag to photo
+ * @author Mohammed Alnadi
+ * @author Salman Hashmi
+ */
 public class AddTagController  implements Initializable {
 	@FXML
 	ListView<String> valueList; 
@@ -24,8 +29,13 @@ public class AddTagController  implements Initializable {
 	
 	String currentTag; 
 	
-	Photo currentPhoto; 
-	
+	Photo currentPhoto;
+
+	/**
+	 * Runs as soon as class is triggered
+	 * @param location default param
+	 * @param resources default param
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
@@ -42,7 +52,10 @@ public class AddTagController  implements Initializable {
 		
 		
 	}
-	
+
+	/**
+	 * Adds value to tag
+	 */
 	public void addValue() {
 		TextInputDialog dialog = new TextInputDialog();
     	dialog.setTitle("Add a TagValue");
@@ -56,7 +69,10 @@ public class AddTagController  implements Initializable {
 			Utilities.updateSerilization(valueList, OpenAlbumController.selectedPhoto.getTags().get(currentTag), OpenAlbumController.staticPhotoTable.getItems(), OpenAlbumController.staticPhotoTable);  		
     	}
 	}
-	
+
+	/**
+	 * Deletes value from tag
+	 */
 	public void deleteValue() {
 		String selectedTag = valueList.getSelectionModel().getSelectedItem();
         if (selectedTag == null) {

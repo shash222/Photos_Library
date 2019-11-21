@@ -23,9 +23,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import constants.Constants;
-
-// TODO Fix bug where list doesn't update unless this view is reopened
+/**
+ * Controller that handles album modifications
+ * @author Mohammed Alnadi
+ * @author Salman Hashmi
+ */
 public class OpenAlbumController implements Initializable {
 	@FXML
 	TableView photoTable;
@@ -42,6 +44,9 @@ public class OpenAlbumController implements Initializable {
 
 	List<Photo> photos = new ArrayList<>();
 
+	/**
+	 * updates tableview whenever a modification is made to the album
+	 */
 	private void setPhotos() {
 
 		photoTable.getItems().remove(0, photoTable.getItems().size());
@@ -57,6 +62,11 @@ public class OpenAlbumController implements Initializable {
 		staticPhotoTable = photoTable;
 	}
 
+	/**
+	 * Runs when controller is triggered
+	 * @param location default param
+	 * @param resources default param
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		System.out.println("There");
@@ -64,6 +74,10 @@ public class OpenAlbumController implements Initializable {
 		System.out.println("There");
 	}
 
+	/**
+	 * updates static selectedEntry and selecctedPhoto values whenever tableview is clicked
+	 * @param mouseEvent response to mouse click
+	 */
 	@FXML
 	public void updateSelected(MouseEvent mouseEvent) {
 		PhotoEntry newSelectedEntry = (PhotoEntry) photoTable.getSelectionModel().getSelectedItem();
@@ -73,6 +87,10 @@ public class OpenAlbumController implements Initializable {
 		}
 	}
 
+	/**
+	 * Adds photo to album
+	 * @param mouseEvent response to clicking button
+	 */
 	@FXML
 	public void addPhoto(MouseEvent mouseEvent) {
 		Utilities.displayView("user/AddPhotoView.fxml");
@@ -83,6 +101,10 @@ public class OpenAlbumController implements Initializable {
 		photoTable.refresh();
 	}
 
+	/**
+	 * Removes photo from album
+	 * @param mouseEvent response to clicking button
+	 */
 	@FXML
 	public void removePhoto(MouseEvent mouseEvent) {
 		if (selectedEntry == null) Utilities.displayAlert(Alert.AlertType.ERROR, "No entry selected");
@@ -92,6 +114,9 @@ public class OpenAlbumController implements Initializable {
 		}
 	}
 
+	/**
+	 * Updates tableview after modifying album
+	 */
 	private void updateTableView() {
 		String albumPath = String.format(Constants.ALBUM_PATH_FORMAT, Photos.currentUser, UserController.selectedAlbum);
 		List<Photo> photosInAlbum = new ArrayList();
@@ -103,6 +128,10 @@ public class OpenAlbumController implements Initializable {
 		photoTable.refresh();
 	}
 
+	/**
+	 * Modifies caption on image
+	 * @param mouseEvent response to clicking button
+	 */
 	@FXML
 	public void modifyCaption(MouseEvent mouseEvent) {
 		if (selectedEntry == null)
@@ -136,6 +165,11 @@ public class OpenAlbumController implements Initializable {
 		}
 	}
 
+	/**
+	 * Displays photo with details
+	 * @param mouseEvent response to clicking button
+	 * @throws IOException thrown if fxml view file can't be found
+	 */
 	@FXML
 	public void displayPhoto(MouseEvent mouseEvent) throws IOException {
 		if (selectedEntry == null)
@@ -144,8 +178,13 @@ public class OpenAlbumController implements Initializable {
 			Utilities.displayView("user/DisplayPhotoView.fxml");
 	}
 
-	
 
+	/**
+	 * Copies photo to new album
+	 * @param title title of album
+	 * @param header header
+	 * @param text text
+	 */
 	private void copyPhoto(String title, String header, String text) {
 		if (selectedEntry == null) Utilities.displayAlert(Alert.AlertType.ERROR, "No entry selected");
 		else {
@@ -163,11 +202,19 @@ public class OpenAlbumController implements Initializable {
 		}
 	}
 
+	/**
+	 * Copies photo to new album
+	 * @param mouseEvent response to clicking button
+	 */
 	@FXML
 	public void copyToNewAlbum(MouseEvent mouseEvent) {
 		copyPhoto("Copy Photo", "Rename", "Album to copy to: ");
 	}
 
+	/**
+	 * Copies  photo to new album and removes  from current
+	 * @param mouseEvent response to clicking button
+	 */
 	@FXML
 	public void moveToNewAlbum(MouseEvent mouseEvent) {
 		copyPhoto("Move photo", "Move", "Album to move to: ");
@@ -175,6 +222,10 @@ public class OpenAlbumController implements Initializable {
 		updateTableView();
 	}
 
+	/**
+	 * Displays slideshow
+	 * @param mouseEvent response to clicking button
+	 */
 	@FXML
 	public void viewSlideshow(MouseEvent mouseEvent) {
 		if (photoTable.getItems().size() == 0) Utilities.displayAlert(Alert.AlertType.ERROR, "No photos in album");
