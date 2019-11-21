@@ -25,6 +25,7 @@ public class SearchPhotoByDateController {
 
     @FXML
     public void getResults(MouseEvent mouseEvent) {
+    	SearchPhotoByTagController.tags = false; 
         LocalDate startDate = rangeStartDate.getValue();
         LocalDate endDate = rangeEndDate.getValue();
         Date startDateAsDate = Date.from(startDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());

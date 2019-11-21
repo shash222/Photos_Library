@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
@@ -155,11 +156,17 @@ public class OpenAlbumController implements Initializable {
 			dialog.setContentText(text);
 			Optional<String> results = dialog.showAndWait();
 			if (results.isPresent()) {
-				String albumPath = String.format(Constants.ALBUM_PATH_FORMAT, Photos.currentUser, results.get());
-				List<Photo> photosInTargetAlbum = Utilities.readSerializedObjectFromFile(albumPath);
-				photosInTargetAlbum.add(selectedPhoto);
-				Utilities.writeSerializedObjectToFile(photosInTargetAlbum, albumPath);
-				return true; 
+				if(Photos.users.get(Photos.currentUser).containsKey(results.get())) {
+					String albumPath = String.format(Constants.ALBUM_PATH_FORMAT, Photos.currentUser, results.get());
+					List<Photo> photosInTargetAlbum = Utilities.readSerializedObjectFromFile(albumPath);
+					photosInTargetAlbum.add(selectedPhoto);
+					Utilities.writeSerializedObjectToFile(photosInTargetAlbum, albumPath);
+					return true; 
+				} else {
+					Utilities.displayAlert(AlertType.ERROR, "Album does not exist.");
+					return false; 
+				}
+				
 			}
 		}
 		return false; 

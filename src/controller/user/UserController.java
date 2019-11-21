@@ -103,7 +103,7 @@ public class UserController implements Initializable {
 //		albumList.setItems(FXCollections.observableList(new ArrayList(Photos.users.get(Photos.currentUser).keySet())));
 	}
 
-	private void updateTableView() {
+	public void updateTableView() {
 		String userAlbumsFilePath = String.format(Constants.USER_ALBUM_LIST_PATH_FORMAT, Photos.currentUser, Photos.currentUser);
 		Utilities.writeToFile(userAlbumsFilePath, new ArrayList<>(Photos.users.get(Photos.currentUser).keySet()));
 		setup();
@@ -144,11 +144,13 @@ public class UserController implements Initializable {
 	@FXML
 	public void searchPhotoByTagView(MouseEvent mouseEvent) {
 		Utilities.displayView("user/SearchPhotosByTag.fxml");
+		updateTableView();
 	}
 	
 	@FXML
 	public void searchPhotoByDateView(MouseEvent mouseEvent) {
 		Utilities.displayView("user/SearchPhotosByDate.fxml");
+		updateTableView(); 
 
 	}
 	
