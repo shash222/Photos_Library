@@ -81,7 +81,7 @@ public class UserController implements Initializable {
 		albumNameColumn.setCellValueFactory(new PropertyValueFactory<>("albumName"));
 		numberOfPhotosColumn.setCellValueFactory(new PropertyValueFactory<>("numberOfPhotosInAlbum"));
 		dateRangeColumn.setCellValueFactory(new PropertyValueFactory<>("dateRange"));
-
+		
 		String user = Photos.currentUser;
 		List<String> userAlbumsList = Utilities.getUserAlbums(String.format(Constants.USER_ALBUM_LIST_PATH_FORMAT, user, user));
 		for (String s : userAlbumsList) {

@@ -39,6 +39,7 @@ public class SearchResultsController implements Initializable {
 		if(SearchPhotoByTagController.tags) {
 			photosInAlbum = (List<Photo>)SearchPhotoByTagController.finalList; 
 		} else {
+			photosInAlbum = SearchPhotoByDateController.searchResult;
 			// SET photosInAlbum TO EQUAL THE LIST FROM SearchPhotoByDateController
 		}
 		imageColumn.setCellValueFactory(new PropertyValueFactory<>("image"));
