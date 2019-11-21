@@ -1,6 +1,7 @@
 package controller.user;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -35,7 +36,9 @@ public class SearchPhotoByTagController implements Initializable {
 		@FXML
 		ComboBox operation; 
 		
-		Set<Photo> finalList = new HashSet<Photo>();
+		public static List<Photo> finalList = new ArrayList<>();
+		
+		public static boolean tags; 
 	
 	
 	 	@Override
@@ -51,6 +54,7 @@ public class SearchPhotoByTagController implements Initializable {
 	 	
 	 	@FXML
 	 	public void search() {
+	 		tags = true; 
 	 		finalList.clear();
 	 		String choice = operation.getValue().toString(); 
 	 		if(choice.equals("And") || choice.equals("Or")) {
@@ -92,6 +96,7 @@ public class SearchPhotoByTagController implements Initializable {
 	 		
 	 		
 	 		System.out.println(finalList); 
+	 		Utilities.displayView("user/SearchResultsView.fxml");
 	 	}
 	 	
 	 	
